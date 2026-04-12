@@ -1,6 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const APP_URL = 'https://app.groomcart.com'
+
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return { ref, className: visible ? 'animate-fade-up' : 'opacity-0' }
+}
 
 function Logo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const dims = size === 'lg' ? 'w-10 h-10' : size === 'md' ? 'w-7 h-7' : 'w-5 h-5'
@@ -19,20 +37,54 @@ function Logo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
 }
 
 function Nav() {
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const close = () => setMobileOpen(false)
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100/60">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Logo />
-        <div className="flex items-center gap-6">
-          <a href="#features" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">Features</a>
-          <a href="#pricing" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">Pricing</a>
-          <a href="#team" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">Team</a>
+        <div className="hidden sm:flex items-center gap-6">
+          <a href="#features" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Features</a>
+          <a href="#pricing" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Pricing</a>
+          <a href="#team" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Team</a>
           <a href={APP_URL} className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Log in</a>
           <a href={APP_URL} className="text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-4 py-2 rounded-lg transition-colors">
             Get started free
           </a>
         </div>
+        <div className="sm:hidden flex items-center gap-3">
+          <a href={APP_URL} className="text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-3.5 py-2 rounded-lg transition-colors">
+            Get started
+          </a>
+          <button
+            type="button"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen(o => !o)}
+            className="w-10 h-10 -mr-2 flex items-center justify-center text-gray-700 hover:text-gray-900"
+          >
+            {mobileOpen ? (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+            ) : (
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+            )}
+          </button>
+        </div>
       </div>
+      {mobileOpen && (
+        <div className="sm:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl">
+          <div className="px-6 py-4 flex flex-col gap-1">
+            <a href="#features" onClick={close} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Features</a>
+            <a href="#pricing" onClick={close} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Pricing</a>
+            <a href="#team" onClick={close} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Team</a>
+            <a href={APP_URL} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Log in</a>
+            <a href={APP_URL} className="mt-2 w-full text-center text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-4 py-3 rounded-lg transition-colors">
+              Get started free
+            </a>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
@@ -73,8 +125,8 @@ function Hero() {
           <p className="mt-4 text-xs text-gray-400 animate-fade-up delay-4">No credit card required</p>
         </div>
 
-        {/* Product screenshot */}
-        <div className="mt-16 animate-scale-in delay-5">
+        {/* Product screenshot — full dashboard (md+) */}
+        <div className="hidden md:block mt-16 animate-scale-in delay-5">
           <div className="relative max-w-4xl mx-auto">
             <div className="absolute -inset-4 bg-gradient-to-b from-brand-50/50 to-transparent rounded-3xl -z-10" />
             <div className="product-shadow rounded-2xl overflow-hidden border border-gray-200/60 bg-white">
@@ -173,6 +225,41 @@ function Hero() {
             </div>
           </div>
         </div>
+
+        {/* Simplified mobile version */}
+        <div className="block md:hidden mt-12 animate-scale-in delay-5">
+          <div className="relative max-w-md mx-auto">
+            <div className="absolute -inset-3 bg-gradient-to-b from-brand-50/50 to-transparent rounded-3xl -z-10" />
+            <div className="product-shadow rounded-2xl overflow-hidden border border-gray-200/60 bg-white p-5">
+              <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                  <span className="text-amber-600 text-base">!</span>
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-amber-900">5 items need reordering</p>
+                  <p className="text-xs text-amber-700">2 almost out, 3 getting low.</p>
+                </div>
+              </div>
+
+              <div className="mt-5 border border-gray-100 rounded-xl p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-xs font-medium">Needs attention</p>
+                  <span className="text-[10px] text-brand-400 font-medium">View all 5 →</span>
+                </div>
+                {[
+                  { name: 'Andis #10 Blade', status: 'Out', color: 'bg-red-50 text-red-700' },
+                  { name: 'Bio-Groom Ear Cleaner', status: 'Low', color: 'bg-amber-50 text-amber-700' },
+                  { name: "Nature's Specialties Shampoo", status: 'Low', color: 'bg-amber-50 text-amber-700' },
+                ].map(item => (
+                  <div key={item.name} className="flex items-center justify-between py-2 border-t border-gray-50 gap-3">
+                    <span className="text-xs font-medium truncate">{item.name}</span>
+                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded flex-shrink-0 ${item.color}`}>{item.status}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -185,18 +272,21 @@ function PainPoints() {
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#b91c1c" strokeWidth="1.2"/><path d="M10 6v5M10 13.5h.01" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round"/></svg>
       ),
       text: "You're mid-groom and realize you're out of #10 blades",
+      sub: "Now you're reshuffling your whole afternoon.",
     },
     {
       icon: (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="#92400e" strokeWidth="1.2"/><path d="M7 8h6M7 11h4" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
       ),
       text: "You're ordering from memory because spreadsheets are a chore",
+      sub: "And you always forget something.",
     },
     {
       icon: (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#1a7a42" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
       ),
       text: "You have no idea if Ryan's or PetEdge has a better price",
+      sub: "You could be overpaying by 20% and never know.",
     },
   ]
 
@@ -208,7 +298,10 @@ function PainPoints() {
           {points.map((p, i) => (
             <div key={i} className="flex items-center gap-4 bg-white rounded-xl px-6 py-4 border border-gray-100 max-w-lg mx-auto card-hover">
               <div className="flex-shrink-0">{p.icon}</div>
-              <p className="text-[15px] text-gray-700 text-left">{p.text}</p>
+              <div className="text-left">
+                <p className="text-[15px] text-gray-700">{p.text}</p>
+                <p className="text-xs text-gray-400 mt-1">{p.sub}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -245,9 +338,10 @@ function HowItWorks() {
     },
   ]
 
+  const reveal = useScrollReveal()
   return (
     <section id="how-it-works" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
         <div className="text-center mb-16">
           <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">How it works</p>
           <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
@@ -258,13 +352,15 @@ function HowItWorks() {
         <div className="grid md:grid-cols-3 gap-8">
           {steps.map(s => (
             <div key={s.num} className="relative group">
-              <div className="bg-white border border-gray-100 rounded-2xl p-8 h-full card-hover">
-                <div className="w-12 h-12 rounded-xl bg-brand-50 text-brand-400 flex items-center justify-center mb-5">
+              <div className="relative bg-white border border-gray-100 rounded-2xl p-8 h-full card-hover overflow-hidden">
+                <span className="pointer-events-none select-none absolute -top-2 right-4 font-display text-7xl text-gray-100 leading-none">
+                  {s.num}
+                </span>
+                <div className="relative w-12 h-12 rounded-xl bg-brand-50 text-brand-400 flex items-center justify-center mb-5">
                   {s.icon}
                 </div>
-                <p className="text-xs font-medium text-brand-400 tracking-wider mb-2">{s.num}</p>
-                <h3 className="text-lg font-medium mb-3 tracking-tight">{s.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
+                <h3 className="relative text-lg font-medium mb-3 tracking-tight">{s.title}</h3>
+                <p className="relative text-sm text-gray-500 leading-relaxed">{s.desc}</p>
               </div>
             </div>
           ))}
@@ -275,9 +371,10 @@ function HowItWorks() {
 }
 
 function Features() {
+  const reveal = useScrollReveal()
   return (
     <section id="features" className="py-24 px-6 bg-gray-50/50">
-      <div className="max-w-6xl mx-auto">
+      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
         <div className="text-center mb-16">
           <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">Features</p>
           <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
@@ -342,10 +439,11 @@ function AIDifferentiator() {
     'What did I order last month?',
     'Best shampoo for a goldendoodle?',
   ]
+  const reveal = useScrollReveal()
 
   return (
     <section className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">AI assistant</p>
@@ -411,9 +509,11 @@ function AIDifferentiator() {
 }
 
 function SocialProof() {
+  const reveal = useScrollReveal()
   return (
     <section className="py-20 px-6 bg-gray-50/50">
-      <div className="max-w-4xl mx-auto text-center">
+      <div ref={reveal.ref} className={`max-w-4xl mx-auto text-center ${reveal.className}`}>
+        <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-6">Built for groomers</p>
         <div className="grid grid-cols-3 gap-8 mb-12">
           {[
             { value: '154', label: 'Grooming products tracked' },
@@ -427,11 +527,13 @@ function SocialProof() {
           ))}
         </div>
         <div className="bg-white border border-gray-100 rounded-2xl p-8 max-w-2xl mx-auto">
-          <p className="text-lg text-gray-600 leading-relaxed italic font-display">
-            "We built GroomCart because we watched groomers run out of supplies mid-appointment,
-            order from memory, and overpay without realizing it. Every groomer deserves a smarter way to manage their supplies."
+          <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-4">Why we built this</p>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            We watched groomers run out of supplies mid-appointment, order from memory,
+            and overpay without realizing it. We built GroomCart because every groomer
+            deserves a smarter way to manage their supplies.
           </p>
-          <div className="mt-5 flex items-center justify-center gap-3">
+          <div className="mt-6 flex items-center justify-center gap-3">
             <div className="w-10 h-10 rounded-full bg-brand-400 flex items-center justify-center text-white text-sm font-medium">TB</div>
             <div className="text-left">
               <p className="text-sm font-medium">Torren Baker</p>
@@ -445,9 +547,10 @@ function SocialProof() {
 }
 
 function Pricing() {
+  const reveal = useScrollReveal()
   return (
     <section id="pricing" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
         <div className="text-center mb-16">
           <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">Pricing</p>
           <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
@@ -498,7 +601,7 @@ function Pricing() {
               {[
                 'Unlimited products',
                 'Unlimited invoice uploads',
-                'AI assistant with full RAG',
+                'AI assistant — ask anything about your stock',
                 'Multi-vendor price comparison',
                 'Smart reorder plans',
                 'Priority support',
@@ -541,9 +644,10 @@ function Team() {
     },
   ]
 
+  const reveal = useScrollReveal()
   return (
     <section id="team" className="py-24 px-6 bg-gray-50/50">
-      <div className="max-w-6xl mx-auto">
+      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
         <div className="text-center mb-16">
           <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">Our team</p>
           <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
@@ -573,10 +677,11 @@ function Team() {
 
 function FinalCTA() {
   const [email, setEmail] = useState('')
+  const reveal = useScrollReveal()
 
   return (
     <section className="py-24 px-6">
-      <div className="max-w-3xl mx-auto text-center">
+      <div ref={reveal.ref} className={`max-w-3xl mx-auto text-center ${reveal.className}`}>
         <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
           Stop guessing<br />what to <span className="italic text-brand-400">order</span>
         </h2>
@@ -593,7 +698,7 @@ function FinalCTA() {
             className="flex-1 h-12 px-4 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-300 focus:ring-2 focus:ring-brand-100 transition-all"
           />
           <a
-            href={`${APP_URL}?email=${encodeURIComponent(email)}`}
+            href={APP_URL}
             className="h-12 px-6 bg-brand-400 hover:bg-brand-500 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-brand-400/20 flex items-center gap-2 text-sm whitespace-nowrap"
           >
             Get started
@@ -613,8 +718,8 @@ function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         <Logo size="sm" />
         <div className="flex items-center gap-6 text-xs text-gray-400">
-          <a href="#" className="hover:text-gray-600 transition-colors">Terms</a>
-          <a href="#" className="hover:text-gray-600 transition-colors">Privacy</a>
+          <a href="mailto:hello@groomcart.com?subject=Terms%20of%20Service" className="hover:text-gray-600 transition-colors">Terms</a>
+          <a href="mailto:hello@groomcart.com?subject=Privacy%20Policy" className="hover:text-gray-600 transition-colors">Privacy</a>
           <a href="mailto:hello@groomcart.com" className="hover:text-gray-600 transition-colors">Contact</a>
         </div>
         <p className="text-xs text-gray-300">&copy; {new Date().getFullYear()} GroomCart. All rights reserved.</p>
