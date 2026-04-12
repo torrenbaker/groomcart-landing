@@ -91,13 +91,16 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="pt-32 pb-20 px-6 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section className="hero-grid relative pt-32 pb-20 px-6 overflow-hidden">
+      <div className="relative z-10 max-w-6xl mx-auto">
         <div className="max-w-3xl mx-auto text-center">
           <div className="animate-fade-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-100 mb-8">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
-              <span className="text-xs font-medium text-brand-500">AI-powered inventory management</span>
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-brand-100/60 shadow-sm mb-8">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-300 opacity-50" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-400" />
+              </span>
+              <span className="text-xs font-medium text-brand-600">AI-powered inventory management</span>
             </div>
           </div>
 
@@ -261,6 +264,7 @@ function Hero() {
           </div>
         </div>
       </div>
+      <div className="h-20 bg-gradient-to-b from-white/0 to-white relative -mt-20 z-10 pointer-events-none" />
     </section>
   )
 }
@@ -307,6 +311,25 @@ function PainPoints() {
         </div>
       </div>
     </section>
+  )
+}
+
+function VendorStrip() {
+  const reveal = useScrollReveal()
+  const names = ["Ryan's Pet Supplies", "PetEdge", "Any supplier with PDF invoices"]
+  return (
+    <div className="py-10 px-6">
+      <div ref={reveal.ref} className={`max-w-3xl mx-auto text-center ${reveal.className}`}>
+        <p className="text-xs text-gray-400 uppercase tracking-widest mb-5">Works with suppliers you already use</p>
+        <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
+          {names.map(name => (
+            <span key={name} className="text-sm font-medium text-gray-400 px-4 py-2 rounded-lg border border-gray-100 bg-gray-50/50">
+              {name}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -391,35 +414,56 @@ function Features() {
               title: 'AI invoice parsing',
               desc: 'Drop a supplier PDF and watch it extract every SKU, price, and quantity automatically. No more manual data entry.',
               badge: 'AI-powered',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="4" y="3" width="20" height="22" rx="3" stroke="currentColor" strokeWidth="1.4"/><path d="M10 14l4-4 4 4M14 10v8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              ),
             },
             {
               title: 'Smart reorder plans',
               desc: 'Based on your actual usage from bookings — not guesses. Grouped by vendor with real prices so you can place orders instantly.',
               badge: 'Forecast',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="6" y="5" width="16" height="20" rx="2.5" stroke="currentColor" strokeWidth="1.4"/><rect x="10" y="3" width="8" height="4" rx="1" stroke="currentColor" strokeWidth="1.4"/><path d="M10 13l2 2 4-4M10 19l2 2 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              ),
             },
             {
               title: 'Price comparison',
               desc: 'See which vendor has the best price for every product, with full price history tracked from every invoice you upload.',
               badge: 'Save money',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M14 4v20M6 9h16M6 19h16" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/><path d="M3 14l3-5 3 5M3 14a3 3 0 006 0M19 14l3-5 3 5M19 14a3 3 0 006 0" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
+              ),
             },
             {
               title: 'AI assistant',
               desc: 'Ask questions in plain English: "What blades do I need?" or "Which shampoo is cheapest?" Answers from your real data.',
               badge: 'AI-powered',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="3" y="5" width="22" height="14" rx="3" stroke="currentColor" strokeWidth="1.4"/><path d="M10 23l4-4 4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9" cy="12" r="1.1" fill="currentColor"/><circle cx="14" cy="12" r="1.1" fill="currentColor"/><circle cx="19" cy="12" r="1.1" fill="currentColor"/></svg>
+              ),
             },
             {
               title: 'Inventory tracking',
               desc: 'Visual stock levels with color-coded status. See at a glance what\'s critical, low, or well stocked across all products.',
               badge: 'Real-time',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M5 23V13M12 23V8M19 23v-7M26 23H4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+              ),
             },
             {
               title: 'Multi-vendor support',
               desc: 'Track products across Ryan\'s, PetEdge, and any supplier you buy from. Compare prices and consolidate orders.',
               badge: 'Vendors',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.4"/><circle cx="6" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.4"/><circle cx="22" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M14 9v3M14 12l-7 8M14 12l7 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+              ),
             },
           ].map(f => (
             <div key={f.title} className="bg-white border border-gray-100 rounded-2xl p-7 card-hover">
-              <div className="flex items-start justify-between mb-4">
+              <div className="w-10 h-10 rounded-lg bg-brand-50 text-brand-400 flex items-center justify-center mb-4">
+                {f.icon}
+              </div>
+              <div className="flex items-start justify-between mb-3">
                 <h3 className="text-[17px] font-medium tracking-tight">{f.title}</h3>
                 <span className="text-[10px] font-medium text-brand-500 bg-brand-50 px-2.5 py-1 rounded-full flex-shrink-0 ml-3">{f.badge}</span>
               </div>
@@ -548,15 +592,33 @@ function SocialProof() {
 
 function Pricing() {
   const reveal = useScrollReveal()
+  const [annual, setAnnual] = useState(false)
+  const proPrice = annual ? 31 : 39
   return (
     <section id="pricing" className="py-24 px-6">
       <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">Pricing</p>
           <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
             Simple, <span className="italic">honest</span> pricing
           </h2>
           <p className="mt-4 text-gray-500">Start free. Upgrade when you're ready.</p>
+        </div>
+
+        <div className="flex items-center justify-center gap-3 mb-12">
+          <span className={`text-sm transition-colors ${!annual ? 'text-gray-900 font-medium' : 'text-gray-400'}`}>Monthly</span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={annual}
+            aria-label="Toggle annual billing"
+            onClick={() => setAnnual(a => !a)}
+            className={`relative w-12 h-6 rounded-full transition-colors ${annual ? 'bg-brand-400' : 'bg-gray-200'}`}
+          >
+            <span className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all ${annual ? 'left-7' : 'left-1'}`} />
+          </button>
+          <span className={`text-sm transition-colors ${annual ? 'text-gray-900 font-medium' : 'text-gray-400'}`}>Annual</span>
+          <span className="text-[10px] font-medium text-brand-500 bg-brand-50 px-2 py-0.5 rounded-full">Save 20%</span>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -593,9 +655,10 @@ function Pricing() {
             </div>
             <p className="text-sm font-medium text-white/70 uppercase tracking-wider">Pro</p>
             <div className="mt-3 flex items-baseline gap-1">
-              <span className="text-4xl font-display">$39</span>
+              <span className="text-4xl font-display">${proPrice}</span>
               <span className="text-sm text-white/60">/month</span>
             </div>
+            <p className="text-xs text-white/60 mt-1 h-4">{annual ? `Billed $${proPrice * 12}/year` : '\u00A0'}</p>
             <p className="text-sm text-white/70 mt-3">For growing salons that need the full toolkit.</p>
             <ul className="mt-6 space-y-3">
               {[
@@ -629,18 +692,21 @@ function Team() {
       role: 'Founding Partner',
       initials: 'TB',
       bio: 'Technical lead and architect behind GroomCart\'s AI-powered inventory platform. Turns grooming chaos into organized, data-driven operations.',
+      city: 'Based in Charlotte, NC',
     },
     {
       name: 'Bobby Groves',
       role: 'Chief Marketing Officer',
       initials: 'BG',
       bio: 'Drives GroomCart\'s go-to-market strategy. Connects with the grooming community to build a product groomers actually love.',
+      city: 'Based in Charlotte, NC',
     },
     {
       name: 'Adam Torregrossa',
       role: 'Sales Development Rep',
       initials: 'AT',
       bio: 'First point of contact for grooming businesses exploring GroomCart. Helps salons understand how smart inventory saves time and money.',
+      city: 'Based in Charlotte, NC',
     },
   ]
 
@@ -661,12 +727,13 @@ function Team() {
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {team.map(t => (
             <div key={t.name} className="bg-white border border-gray-100 rounded-2xl p-7 text-center card-hover">
-              <div className="w-20 h-20 rounded-full bg-brand-400 flex items-center justify-center text-white text-2xl font-display mx-auto mb-5">
+              <div className="w-20 h-20 rounded-full bg-brand-400 flex items-center justify-center text-white text-2xl font-display mx-auto mb-7 ring-2 ring-brand-200 ring-offset-4 ring-offset-white">
                 {t.initials}
               </div>
               <h3 className="text-[17px] font-medium tracking-tight">{t.name}</h3>
               <p className="text-xs text-brand-400 font-medium mt-1">{t.role}</p>
               <p className="text-sm text-gray-500 leading-relaxed mt-4">{t.bio}</p>
+              <p className="text-xs text-gray-400 italic mt-3">{t.city}</p>
             </div>
           ))}
         </div>
@@ -707,6 +774,17 @@ function FinalCTA() {
         </div>
 
         <p className="mt-3 text-xs text-gray-400">Free to start. No credit card required. Set up in 5 minutes.</p>
+
+        <div className="flex items-center justify-center gap-3 mt-6">
+          <div className="flex -space-x-2">
+            {['TB', 'BG', 'AT'].map(initials => (
+              <div key={initials} className="w-7 h-7 rounded-full bg-brand-400 border-2 border-white flex items-center justify-center text-white text-[9px] font-medium">
+                {initials}
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-400">Join our early access program</p>
+        </div>
       </div>
     </section>
   )
@@ -731,9 +809,11 @@ function Footer() {
 export default function App() {
   return (
     <div className="min-h-screen bg-white">
+      <div className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-400 via-brand-300 to-brand-400 z-[60]" />
       <Nav />
       <Hero />
       <PainPoints />
+      <VendorStrip />
       <HowItWorks />
       <Features />
       <AIDifferentiator />
