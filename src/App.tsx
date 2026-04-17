@@ -93,12 +93,8 @@ function Hero() {
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="max-w-3xl mx-auto text-center">
           <div className="animate-fade-up">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-brand-100/60 shadow-sm mb-8">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-300 opacity-50" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-400" />
-              </span>
-              <span className="text-xs font-medium text-brand-600">AI-powered inventory management</span>
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-brand-100/60 shadow-sm mb-8">
+              <span className="text-xs font-medium text-brand-600">Know what to order, before you run out</span>
             </div>
           </div>
 
