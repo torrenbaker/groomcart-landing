@@ -46,16 +46,15 @@ function Nav() {
         <Logo />
         <div className="hidden sm:flex items-center gap-6">
           <a href="#features" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Features</a>
-          <a href="#pricing" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Pricing</a>
           <a href="#team" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Team</a>
           <a href={APP_URL} className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Log in</a>
           <a href={APP_URL} className="text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-4 py-2 rounded-lg transition-colors">
-            Get started free
+            Request a demo
           </a>
         </div>
         <div className="sm:hidden flex items-center gap-3">
           <a href={APP_URL} className="text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-3.5 py-2 rounded-lg transition-colors">
-            Get started
+            Request a demo
           </a>
           <button
             type="button"
@@ -76,11 +75,10 @@ function Nav() {
         <div className="sm:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl">
           <div className="px-6 py-4 flex flex-col gap-1">
             <a href="#features" onClick={close} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Features</a>
-            <a href="#pricing" onClick={close} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Pricing</a>
             <a href="#team" onClick={close} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Team</a>
             <a href={APP_URL} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Log in</a>
             <a href={APP_URL} className="mt-2 w-full text-center text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-4 py-3 rounded-lg transition-colors">
-              Get started free
+              Request a demo
             </a>
           </div>
         </div>
@@ -117,15 +115,13 @@ function Hero() {
 
           <div className="mt-10 flex items-center justify-center gap-4 animate-fade-up delay-3">
             <a href={APP_URL} className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-400 hover:bg-brand-500 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-brand-400/20 text-[15px]">
-              Get started free
+              Request a demo
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </a>
-            <a href="#how-it-works" className="inline-flex items-center gap-2 px-7 py-3.5 text-gray-600 hover:text-gray-900 font-medium rounded-xl border border-gray-200 hover:border-gray-300 transition-all text-[15px]">
-              See how it works
+            <a href="#team" className="inline-flex items-center gap-2 px-7 py-3.5 text-gray-600 hover:text-gray-900 font-medium rounded-xl border border-gray-200 hover:border-gray-300 transition-all text-[15px]">
+              Meet the team
             </a>
           </div>
-
-          <p className="mt-4 text-xs text-gray-400 animate-fade-up delay-4">No credit card required</p>
         </div>
 
         {/* Product screenshot — full dashboard (md+) */}
@@ -275,22 +271,22 @@ function PainPoints() {
       icon: (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#b91c1c" strokeWidth="1.2"/><path d="M10 6v5M10 13.5h.01" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round"/></svg>
       ),
-      text: "You're mid-groom and realize you're out of #10 blades",
+      text: "You've run out of a product mid-appointment and had to improvise",
       sub: "Now you're reshuffling your whole afternoon.",
     },
     {
       icon: (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="#92400e" strokeWidth="1.2"/><path d="M7 8h6M7 11h4" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
       ),
-      text: "You're ordering from memory because spreadsheets are a chore",
-      sub: "And you always forget something.",
+      text: "You spend more time managing orders than actually grooming",
+      sub: "And you always end up forgetting something.",
     },
     {
       icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#1a7a42" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M5 6h10M5 14h10" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/><path d="M4 10l2.5-4 2.5 4M4 10a2.5 2.5 0 005 0M11 10l2.5-4 2.5 4M11 10a2.5 2.5 0 005 0" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
       ),
-      text: "You have no idea if Ryan's or PetEdge has a better price",
-      sub: "You could be overpaying by 20% and never know.",
+      text: "You don't know if you're overpaying until it's too late",
+      sub: "Switching suppliers feels like starting from scratch.",
     },
   ]
 
@@ -318,74 +314,14 @@ function VendorStrip() {
   const reveal = useScrollReveal()
   const names = ["Ryan's Pet Supplies", "PetEdge", "Any supplier with PDF invoices"]
   return (
-    <div className="py-10 px-6">
+    <section className="py-10 px-6">
       <div ref={reveal.ref} className={`max-w-3xl mx-auto text-center ${reveal.className}`}>
         <p className="text-xs text-gray-400 uppercase tracking-widest mb-5">Works with suppliers you already use</p>
-        <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
+        <div className="flex items-center justify-center gap-8 flex-wrap">
           {names.map(name => (
             <span key={name} className="text-sm font-medium text-gray-400 px-4 py-2 rounded-lg border border-gray-100 bg-gray-50/50">
               {name}
             </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function HowItWorks() {
-  const steps = [
-    {
-      num: '01',
-      title: 'Upload your supplier invoices',
-      desc: 'Drop a PDF and our AI extracts every line item, matches products, and updates your prices automatically.',
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="3" width="20" height="22" rx="3" stroke="currentColor" strokeWidth="1.2"/><path d="M10 14l4-4 4 4M14 10v8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-      ),
-    },
-    {
-      num: '02',
-      title: 'See what you need to order',
-      desc: 'GroomCart tracks usage from your bookings and tells you exactly what to reorder, grouped by vendor, with the best prices.',
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="3" stroke="currentColor" strokeWidth="1.2"/><path d="M9 10l2 2 4-4M9 16l2 2 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-      ),
-    },
-    {
-      num: '03',
-      title: 'Ask your AI assistant anything',
-      desc: '"What shampoo should I use for a matted doodle?" — answers based on your actual inventory and prices, not the internet.',
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="5" width="22" height="14" rx="3" stroke="currentColor" strokeWidth="1.2"/><path d="M10 23l4-4 4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></svg>
-      ),
-    },
-  ]
-
-  const reveal = useScrollReveal()
-  return (
-    <section id="how-it-works" className="py-24 px-6">
-      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
-        <div className="text-center mb-16">
-          <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">How it works</p>
-          <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
-            Three steps to <span className="italic">never</span> run out
-          </h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {steps.map(s => (
-            <div key={s.num} className="relative group">
-              <div className="relative bg-white border border-gray-100 rounded-2xl p-8 h-full card-hover overflow-hidden">
-                <span className="pointer-events-none select-none absolute -top-2 right-4 font-display text-7xl text-gray-100 leading-none">
-                  {s.num}
-                </span>
-                <div className="relative w-12 h-12 rounded-xl bg-brand-50 text-brand-400 flex items-center justify-center mb-5">
-                  {s.icon}
-                </div>
-                <h3 className="relative text-lg font-medium mb-3 tracking-tight">{s.title}</h3>
-                <p className="relative text-sm text-gray-500 leading-relaxed">{s.desc}</p>
-              </div>
-            </div>
           ))}
         </div>
       </div>
@@ -411,16 +347,16 @@ function Features() {
         <div className="grid md:grid-cols-2 gap-6">
           {[
             {
-              title: 'AI invoice parsing',
-              desc: 'Drop a supplier PDF and watch it extract every SKU, price, and quantity automatically. No more manual data entry.',
-              badge: 'AI-powered',
+              title: 'Inventory tracking',
+              desc: "Visual stock levels with color-coded status. See at a glance what's critical, low, or well stocked across all your products.",
+              badge: 'Real-time',
               icon: (
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="4" y="3" width="20" height="22" rx="3" stroke="currentColor" strokeWidth="1.4"/><path d="M10 14l4-4 4 4M14 10v8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M5 23V13M12 23V8M19 23v-7M26 23H4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
               ),
             },
             {
               title: 'Smart reorder plans',
-              desc: 'Based on your actual usage from bookings — not guesses. Grouped by vendor with real prices so you can place orders instantly.',
+              desc: "Based on your actual usage from bookings, not guesses. Grouped by vendor with real prices so you can place orders in minutes.",
               badge: 'Forecast',
               icon: (
                 <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="6" y="5" width="16" height="20" rx="2.5" stroke="currentColor" strokeWidth="1.4"/><rect x="10" y="3" width="8" height="4" rx="1" stroke="currentColor" strokeWidth="1.4"/><path d="M10 13l2 2 4-4M10 19l2 2 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -435,24 +371,8 @@ function Features() {
               ),
             },
             {
-              title: 'AI assistant',
-              desc: 'Ask questions in plain English: "What blades do I need?" or "Which shampoo is cheapest?" Answers from your real data.',
-              badge: 'AI-powered',
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="3" y="5" width="22" height="14" rx="3" stroke="currentColor" strokeWidth="1.4"/><path d="M10 23l4-4 4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9" cy="12" r="1.1" fill="currentColor"/><circle cx="14" cy="12" r="1.1" fill="currentColor"/><circle cx="19" cy="12" r="1.1" fill="currentColor"/></svg>
-              ),
-            },
-            {
-              title: 'Inventory tracking',
-              desc: 'Visual stock levels with color-coded status. See at a glance what\'s critical, low, or well stocked across all products.',
-              badge: 'Real-time',
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M5 23V13M12 23V8M19 23v-7M26 23H4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
-              ),
-            },
-            {
               title: 'Multi-vendor support',
-              desc: 'Track products across Ryan\'s, PetEdge, and any supplier you buy from. Compare prices and consolidate orders.',
+              desc: "Track products across all your suppliers. Compare prices and consolidate orders so nothing slips through the cracks.",
               badge: 'Vendors',
               icon: (
                 <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.4"/><circle cx="6" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.4"/><circle cx="22" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M14 9v3M14 12l-7 8M14 12l7 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
@@ -476,237 +396,25 @@ function Features() {
   )
 }
 
-function AIDifferentiator() {
-  const prompts = [
-    'What am I running low on?',
-    'Compare blade prices',
-    'What did I order last month?',
-    'Best shampoo for a goldendoodle?',
-  ]
-  const reveal = useScrollReveal()
-
-  return (
-    <section className="py-24 px-6">
-      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">AI assistant</p>
-            <h2 className="font-display text-4xl sm:text-5xl tracking-tight leading-tight">
-              Your inventory<br />
-              <span className="italic">knows</span> your business
-            </h2>
-            <p className="mt-5 text-gray-500 leading-relaxed">
-              Ask anything in plain English. GroomCart's AI assistant understands your products,
-              stock levels, vendors, and prices — not generic internet answers, but insights
-              from your actual business data.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {prompts.map(p => (
-                <span key={p} className="text-xs px-3 py-1.5 rounded-full border border-gray-200 text-gray-500 hover:border-brand-200 hover:text-brand-500 transition-colors cursor-default">
-                  {p}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Command bar mockup */}
-          <div className="relative">
-            <div className="absolute -inset-6 bg-gradient-to-br from-brand-50/40 to-transparent rounded-3xl -z-10" />
-            <div className="product-shadow rounded-2xl overflow-hidden border border-gray-200/60 bg-white">
-              <div className="p-5 border-b border-gray-100">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-md">
-                    <div className="w-1 h-1 rounded-full bg-brand-400" />
-                    <div className="w-1 h-1 rounded-full bg-brand-400 opacity-60" />
-                    <div className="w-1 h-1 rounded-full bg-brand-400 opacity-30" />
-                    <span className="text-[10px] font-medium text-gray-500 ml-0.5">AI</span>
-                  </div>
-                  <span className="text-sm text-gray-700">Compare ear cleaner prices</span>
-                  <div className="ml-auto">
-                    <span className="text-[10px] text-gray-300 px-1.5 py-0.5 border border-gray-200 rounded">Esc</span>
-                  </div>
-                </div>
-              </div>
-              <div className="p-5">
-                <div className="bg-gray-50 rounded-xl p-4 ai-glow">
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    Bio-Groom Ear Cleaner 8oz is <span className="font-medium">$4.20 at Ryan's</span> vs <span className="font-medium">$5.10 at PetEdge</span>.
-                    Ryan's is 18% cheaper. You last ordered it on March 5th and typically go through a bottle every 20 days.
-                    At your current rate, you'll need more by March 25th.
-                  </p>
-                </div>
-                <div className="mt-4 flex items-center gap-2 border-t border-gray-100 pt-4">
-                  <div className="flex-1 h-8 rounded-lg border border-gray-200 flex items-center px-3">
-                    <span className="text-xs text-gray-400">Ask a follow-up...</span>
-                  </div>
-                  <div className="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function SocialProof() {
-  const reveal = useScrollReveal()
-  return (
-    <section className="py-20 px-6 bg-gray-50/50">
-      <div ref={reveal.ref} className={`max-w-4xl mx-auto text-center ${reveal.className}`}>
-        <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-6">Built for groomers</p>
-        <div className="grid grid-cols-3 gap-8 mb-12">
-          {[
-            { value: '154', label: 'Grooming products tracked' },
-            { value: '3', label: 'Vendor integrations' },
-            { value: '<2s', label: 'AI response time' },
-          ].map(s => (
-            <div key={s.label}>
-              <p className="text-3xl sm:text-4xl font-display text-brand-400">{s.value}</p>
-              <p className="text-xs text-gray-400 mt-1">{s.label}</p>
-            </div>
-          ))}
-        </div>
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 max-w-2xl mx-auto">
-          <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-4">Why we built this</p>
-          <p className="text-lg text-gray-700 leading-relaxed">
-            We watched groomers run out of supplies mid-appointment, order from memory,
-            and overpay without realizing it. We built GroomCart because every groomer
-            deserves a smarter way to manage their supplies.
-          </p>
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-brand-400 flex items-center justify-center text-white text-sm font-medium">TB</div>
-            <div className="text-left">
-              <p className="text-sm font-medium">Torren Baker</p>
-              <p className="text-xs text-gray-400">Founding Partner, GroomCart</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Pricing() {
-  const reveal = useScrollReveal()
-  const [annual, setAnnual] = useState(false)
-  const proPrice = annual ? 31 : 39
-  return (
-    <section id="pricing" className="py-24 px-6">
-      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
-        <div className="text-center mb-10">
-          <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">Pricing</p>
-          <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
-            Simple, <span className="italic">honest</span> pricing
-          </h2>
-          <p className="mt-4 text-gray-500">Start free. Upgrade when you're ready.</p>
-        </div>
-
-        <div className="flex items-center justify-center gap-3 mb-12">
-          <span className={`text-sm transition-colors ${!annual ? 'text-gray-900 font-medium' : 'text-gray-400'}`}>Monthly</span>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={annual}
-            aria-label="Toggle annual billing"
-            onClick={() => setAnnual(a => !a)}
-            className={`relative w-12 h-6 rounded-full transition-colors ${annual ? 'bg-brand-400' : 'bg-gray-200'}`}
-          >
-            <span className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all ${annual ? 'left-7' : 'left-1'}`} />
-          </button>
-          <span className={`text-sm transition-colors ${annual ? 'text-gray-900 font-medium' : 'text-gray-400'}`}>Annual</span>
-          <span className="text-[10px] font-medium text-brand-500 bg-brand-50 px-2 py-0.5 rounded-full">Save 20%</span>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-          {/* Free tier */}
-          <div className="bg-white border border-gray-100 rounded-2xl p-8 card-hover">
-            <p className="text-sm font-medium text-gray-400 uppercase tracking-wider">Starter</p>
-            <div className="mt-3 flex items-baseline gap-1">
-              <span className="text-4xl font-display">$0</span>
-              <span className="text-sm text-gray-400">/month</span>
-            </div>
-            <p className="text-sm text-gray-500 mt-3">Perfect for solo groomers getting started.</p>
-            <ul className="mt-6 space-y-3">
-              {[
-                'Up to 25 products tracked',
-                '3 invoice uploads / month',
-                'Basic reorder alerts',
-                'Single vendor',
-              ].map(f => (
-                <li key={f} className="flex items-start gap-2.5 text-sm text-gray-600">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5"><path d="M4 8l3 3 5-5" stroke="#1a7a42" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <a href={APP_URL} className="mt-8 block w-full text-center py-3 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 hover:border-gray-300 hover:bg-gray-50 transition-all">
-              Get started free
-            </a>
-          </div>
-
-          {/* Pro tier */}
-          <div className="bg-brand-400 border border-brand-500 rounded-2xl p-8 text-white relative card-hover">
-            <div className="absolute top-4 right-4">
-              <span className="text-[10px] font-medium bg-white/20 px-2.5 py-1 rounded-full">Most popular</span>
-            </div>
-            <p className="text-sm font-medium text-white/70 uppercase tracking-wider">Pro</p>
-            <div className="mt-3 flex items-baseline gap-1">
-              <span className="text-4xl font-display">${proPrice}</span>
-              <span className="text-sm text-white/60">/month</span>
-            </div>
-            <p className="text-xs text-white/60 mt-1 h-4">{annual ? `Billed $${proPrice * 12}/year` : '\u00A0'}</p>
-            <p className="text-sm text-white/70 mt-3">For growing salons that need the full toolkit.</p>
-            <ul className="mt-6 space-y-3">
-              {[
-                'Unlimited products',
-                'Unlimited invoice uploads',
-                'AI assistant — ask anything about your stock',
-                'Multi-vendor price comparison',
-                'Smart reorder plans',
-                'Priority support',
-              ].map(f => (
-                <li key={f} className="flex items-start gap-2.5 text-sm text-white/90">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0 mt-0.5"><path d="M4 8l3 3 5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <a href={APP_URL} className="mt-8 block w-full text-center py-3 rounded-xl bg-white text-brand-500 text-sm font-medium hover:bg-white/95 transition-all">
-              Start 14-day free trial
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function Team() {
   const team = [
     {
       name: 'Torren Baker',
-      role: 'Founding Partner',
+      role: 'Co-Founder',
       initials: 'TB',
-      bio: 'Technical lead and architect behind GroomCart\'s AI-powered inventory platform. Turns grooming chaos into organized, data-driven operations.',
-      city: 'Based in Charlotte, NC',
+      bio: "Managed supply chain analytics for a portfolio of 10,000+ properties before realizing small business owners deal with the same inventory headaches, just without the tools. Built GroomCart to fix that.",
     },
     {
       name: 'Bobby Groves',
-      role: 'Chief Marketing Officer',
+      role: 'Co-Founder',
       initials: 'BG',
-      bio: 'Drives GroomCart\'s go-to-market strategy. Connects with the grooming community to build a product groomers actually love.',
-      city: 'Based in Charlotte, NC',
+      bio: "Spent years helping businesses figure out what their customers actually want and how to reach them. Joined GroomCart because groomers deserve better tools than spreadsheets and sticky notes.",
     },
     {
       name: 'Adam Torregrossa',
-      role: 'Sales Development Rep',
+      role: 'Co-Founder',
       initials: 'AT',
-      bio: 'First point of contact for grooming businesses exploring GroomCart. Helps salons understand how smart inventory saves time and money.',
-      city: 'Based in Charlotte, NC',
+      bio: "Comes from engineering where if you run out of parts, production stops. Same problem groomers face every day. Now he's the guy who walks you through GroomCart and makes sure it actually works for your shop.",
     },
   ]
 
@@ -720,7 +428,7 @@ function Team() {
             Built by people who <span className="italic">get it</span>
           </h2>
           <p className="mt-4 text-gray-500 max-w-lg mx-auto">
-            We're a small team obsessed with solving the supply headaches that groomers face every day.
+            We're a small team obsessed with solving the supply headaches that groomers deal with every day.
           </p>
         </div>
 
@@ -733,7 +441,6 @@ function Team() {
               <h3 className="text-[17px] font-medium tracking-tight">{t.name}</h3>
               <p className="text-xs text-brand-400 font-medium mt-1">{t.role}</p>
               <p className="text-sm text-gray-500 leading-relaxed mt-4">{t.bio}</p>
-              <p className="text-xs text-gray-400 italic mt-3">{t.city}</p>
             </div>
           ))}
         </div>
@@ -744,47 +451,49 @@ function Team() {
 
 function FinalCTA() {
   const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
   const reveal = useScrollReveal()
 
   return (
     <section className="py-24 px-6">
       <div ref={reveal.ref} className={`max-w-3xl mx-auto text-center ${reveal.className}`}>
         <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
-          Stop guessing<br />what to <span className="italic text-brand-400">order</span>
+          See GroomCart <span className="italic text-brand-400">in action</span>
         </h2>
         <p className="mt-5 text-gray-500 text-lg max-w-xl mx-auto">
-          Join groomers who are saving time, saving money, and never running out of supplies again.
+          We're working with grooming businesses now. Drop your email and we'll set up a quick walkthrough.
         </p>
 
-        <div className="mt-10 flex items-center gap-3 max-w-md mx-auto">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@groomer.com"
-            className="flex-1 h-12 px-4 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-300 focus:ring-2 focus:ring-brand-100 transition-all"
-          />
-          <a
-            href={APP_URL}
-            className="h-12 px-6 bg-brand-400 hover:bg-brand-500 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-brand-400/20 flex items-center gap-2 text-sm whitespace-nowrap"
-          >
-            Get started
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          </a>
-        </div>
-
-        <p className="mt-3 text-xs text-gray-400">Free to start. No credit card required. Set up in 5 minutes.</p>
-
-        <div className="flex items-center justify-center gap-3 mt-6">
-          <div className="flex -space-x-2">
-            {['TB', 'BG', 'AT'].map(initials => (
-              <div key={initials} className="w-7 h-7 rounded-full bg-brand-400 border-2 border-white flex items-center justify-center text-white text-[9px] font-medium">
-                {initials}
-              </div>
-            ))}
+        {!submitted ? (
+          <>
+            <div className="mt-10 flex items-center gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@yoursalon.com"
+                className="flex-1 h-12 px-4 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-300 focus:ring-2 focus:ring-brand-100 transition-all"
+              />
+              <button
+                onClick={() => { if (email.includes('@')) setSubmitted(true) }}
+                className="h-12 px-6 bg-brand-400 hover:bg-brand-500 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-brand-400/20 flex items-center gap-2 text-sm whitespace-nowrap"
+              >
+                Request a demo
+              </button>
+            </div>
+            <p className="mt-3 text-xs text-gray-400">We'll be in touch within 24 hours.</p>
+          </>
+        ) : (
+          <div className="mt-10 bg-brand-50 border border-brand-100 rounded-2xl p-8 max-w-md mx-auto">
+            <div className="w-12 h-12 rounded-full bg-brand-400 flex items-center justify-center mx-auto mb-4">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 10l4 4 6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <p className="text-lg font-medium text-brand-600">You're on the list</p>
+            <p className="text-sm text-brand-500 mt-2">We'll reach out shortly to schedule your walkthrough.</p>
           </div>
-          <p className="text-xs text-gray-400">Join our early access program</p>
-        </div>
+        )}
       </div>
     </section>
   )
@@ -796,8 +505,6 @@ function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         <Logo size="sm" />
         <div className="flex items-center gap-6 text-xs text-gray-400">
-          <a href="mailto:hello@groomcart.com?subject=Terms%20of%20Service" className="hover:text-gray-600 transition-colors">Terms</a>
-          <a href="mailto:hello@groomcart.com?subject=Privacy%20Policy" className="hover:text-gray-600 transition-colors">Privacy</a>
           <a href="mailto:hello@groomcart.com" className="hover:text-gray-600 transition-colors">Contact</a>
         </div>
         <p className="text-xs text-gray-300">&copy; {new Date().getFullYear()} GroomCart. All rights reserved.</p>
@@ -809,16 +516,11 @@ function Footer() {
 export default function App() {
   return (
     <div className="min-h-screen bg-white">
-      <div className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-400 via-brand-300 to-brand-400 z-[60]" />
       <Nav />
       <Hero />
       <PainPoints />
       <VendorStrip />
-      <HowItWorks />
       <Features />
-      <AIDifferentiator />
-      <SocialProof />
-      <Pricing />
       <Team />
       <FinalCTA />
       <Footer />
