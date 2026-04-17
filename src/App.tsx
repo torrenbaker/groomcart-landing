@@ -92,12 +92,6 @@ function Hero() {
     <section className="hero-grid relative pt-32 pb-20 px-6 overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="max-w-3xl mx-auto text-center">
-          <div className="animate-fade-up">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-brand-100/60 shadow-sm mb-8">
-              <span className="text-xs font-medium text-brand-600">Know what to order, before you run out</span>
-            </div>
-          </div>
-
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-[1.08] tracking-tight animate-fade-up delay-1">
             Never run out of{' '}
             <span className="italic text-brand-400">supplies</span>{' '}
