@@ -100,7 +100,7 @@ function Hero() {
 
           <p className="mt-6 text-lg sm:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto animate-fade-up delay-2">
             GroomCart tracks your inventory, parses invoices with AI, compares vendor prices,
-            and tells you exactly what to reorder — before you run out.
+            and flags what to reorder so you can stay ahead of what's running low.
           </p>
 
           <div className="mt-10 flex items-center justify-center gap-4 animate-fade-up delay-3">
@@ -259,35 +259,56 @@ function PainPoints() {
   const points = [
     {
       icon: (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="11" height="9" rx="1.5" stroke="#92400e" strokeWidth="1.2"/><rect x="7" y="7" width="11" height="9" rx="1.5" stroke="#92400e" strokeWidth="1.2" fill="white"/></svg>
+      ),
+      text: "You're juggling 3 supplier sites to find the best price",
+      sub: "PetEdge is cheapest, Ryan's ships faster — every reorder turns into a decision.",
+    },
+    {
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 3h9l3 3v11H4z" stroke="#92400e" strokeWidth="1.2" strokeLinejoin="round"/><path d="M13 3v3h3" stroke="#92400e" strokeWidth="1.2" strokeLinejoin="round"/><path d="M7 9h6M7 12h4" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
+      ),
+      text: "You ordered from memory and something slipped through",
+      sub: "Now you're paying for rush shipping or placing a second order to cover it.",
+    },
+    {
+      icon: (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#b91c1c" strokeWidth="1.2"/><path d="M10 6v5M10 13.5h.01" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round"/></svg>
       ),
-      text: "You've run out of a product mid-appointment and had to improvise",
-      sub: "Now you're reshuffling your whole afternoon.",
+      text: "You ran out of a high-use product at the worst possible time",
+      sub: "The whole afternoon gets reshuffled and someone's running to Amazon.",
     },
     {
       icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="#92400e" strokeWidth="1.2"/><path d="M7 8h6M7 11h4" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke="#92400e" strokeWidth="1.2"/><path d="M6 12V9M9 12V8M12 12v-5M15 12v-3" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
       ),
-      text: "You spend more time managing orders than actually grooming",
-      sub: "And you always end up forgetting something.",
+      text: "You have no real view of what you're spending on supplies",
+      sub: "Invoices are scattered across emails. \"How much on shampoo last quarter?\" is a research project.",
     },
     {
       icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M5 6h10M5 14h10" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/><path d="M4 10l2.5-4 2.5 4M4 10a2.5 2.5 0 005 0M11 10l2.5-4 2.5 4M11 10a2.5 2.5 0 005 0" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 6l7-3 7 3v8l-7 3-7-3z" stroke="#92400e" strokeWidth="1.2" strokeLinejoin="round"/><path d="M10 8.5v3M9 9.5h2M9 11h2" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
       ),
-      text: "You don't know if you're overpaying until it's too late",
-      sub: "Switching suppliers feels like starting from scratch.",
+      text: "You're placing small orders that miss the free-shipping threshold",
+      sub: "$15 here, $22 there — half of it could've been one basket.",
+    },
+    {
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="11" width="6" height="6" stroke="#92400e" strokeWidth="1.2"/><rect x="11" y="11" width="6" height="6" stroke="#92400e" strokeWidth="1.2"/><rect x="7" y="4" width="6" height="6" stroke="#92400e" strokeWidth="1.2"/></svg>
+      ),
+      text: "You over-ordered and now it's sitting on the shelf",
+      sub: "Cash tied up in product you won't touch for months — and you'll still forget the stuff you actually use.",
     },
   ]
 
   return (
     <section className="py-16 px-6 bg-gray-50/50">
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-4">Sound familiar?</p>
-        <div className="space-y-4">
+      <div className="max-w-5xl mx-auto">
+        <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-8 text-center">Sound familiar?</p>
+        <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
           {points.map((p, i) => (
-            <div key={i} className="flex items-center gap-4 bg-white rounded-xl px-6 py-4 border border-gray-100 max-w-lg mx-auto card-hover">
-              <div className="flex-shrink-0">{p.icon}</div>
+            <div key={i} className="flex items-start gap-4 bg-white rounded-xl px-6 py-4 border border-gray-100 card-hover">
+              <div className="flex-shrink-0 mt-0.5">{p.icon}</div>
               <div className="text-left">
                 <p className="text-[15px] text-gray-700">{p.text}</p>
                 <p className="text-xs text-gray-400 mt-1">{p.sub}</p>
@@ -398,7 +419,7 @@ function Team() {
       name: 'Bobby Groves',
       role: 'Co-Founder',
       initials: 'BG',
-      bio: "Spent years helping businesses figure out what their customers actually want and how to reach them. Joined GroomCart because groomers deserve better tools than spreadsheets and sticky notes.",
+      bio: "Former strategy consultant at L.E.K. Consulting, where he worked on consumer and healthcare engagements — including projects in the pet grooming and pet health space — giving him a close-up view of how small service businesses actually operate and where the real inefficiencies are buried. Started GroomCart because he saw how much time and margin grooming businesses lose to fragmented supply ordering.",
     },
     {
       name: 'Adam Torregrossa',
