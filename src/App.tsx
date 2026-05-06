@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 const APP_URL = 'https://app.groomcart.com'
+const HERO_VIDEO = '/hero-loop.mp4'
+const HERO_POSTER = '/hero-poster.jpg'
 
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null)
@@ -20,48 +22,63 @@ function useScrollReveal() {
   return { ref, className: visible ? 'animate-fade-up' : 'opacity-0' }
 }
 
-function Logo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
+function Logo({ size = 'md', light = false }: { size?: 'sm' | 'md' | 'lg', light?: boolean }) {
   const dims = size === 'lg' ? 'w-10 h-10' : size === 'md' ? 'w-7 h-7' : 'w-5 h-5'
   const text = size === 'lg' ? 'text-2xl' : size === 'md' ? 'text-lg' : 'text-sm'
+  const bg = light ? 'bg-white' : 'bg-brand-400'
+  const fill = light ? '#1a7a42' : 'white'
+  const textColor = light ? 'text-white' : ''
   return (
     <div className="flex items-center gap-2.5">
-      <div className={`${dims} bg-brand-400 rounded-lg flex items-center justify-center`}>
+      <div className={`${dims} ${bg} rounded-lg flex items-center justify-center`}>
         <svg viewBox="0 0 32 32" className={size === 'lg' ? 'w-6 h-6' : size === 'md' ? 'w-4 h-4' : 'w-3 h-3'}>
-          <rect x="6" y="15" width="20" height="11" rx="2.5" fill="white" />
-          <rect x="10" y="7" width="12" height="10" rx="5" fill="white" opacity="0.6" />
+          <rect x="6" y="15" width="20" height="11" rx="2.5" fill={fill} />
+          <rect x="10" y="7" width="12" height="10" rx="5" fill={fill} opacity="0.6" />
         </svg>
       </div>
-      <span className={`${text} font-display`}>GroomCart</span>
+      <span className={`${text} font-display ${textColor}`}>GroomCart</span>
     </div>
   )
 }
 
-function Nav() {
+function Hero() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const close = () => setMobileOpen(false)
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100/60">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Logo />
+    <section className="relative bg-[#1a1411] min-h-[640px] sm:min-h-[720px] overflow-hidden">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster={HERO_POSTER}
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src={HERO_VIDEO} type="video/mp4" />
+      </video>
+
+      <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/55 pointer-events-none" />
+
+      <nav className="relative z-20 px-6 sm:px-8 py-5 flex items-center justify-between">
+        <Logo light />
         <div className="hidden sm:flex items-center gap-6">
-          <a href="#features" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Features</a>
-          <a href="#team" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Team</a>
-          <a href={APP_URL} className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Log in</a>
-          <a href={APP_URL} className="text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-4 py-2 rounded-lg transition-colors">
-            Request a demo
+          <a href="#product" className="text-sm text-white/75 hover:text-white transition-colors">Product</a>
+          <a href="#team" className="text-sm text-white/75 hover:text-white transition-colors">Team</a>
+          <a href={APP_URL} className="text-sm text-white/75 hover:text-white transition-colors">Log in</a>
+          <a href="#cta" className="text-sm font-medium text-gray-900 bg-white hover:bg-white/95 px-4 py-2 rounded-lg transition-colors">
+            Get a demo
           </a>
         </div>
         <div className="sm:hidden flex items-center gap-3">
-          <a href={APP_URL} className="text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-3.5 py-2 rounded-lg transition-colors">
-            Request a demo
+          <a href="#cta" className="text-sm font-medium text-gray-900 bg-white px-3.5 py-2 rounded-lg">
+            Get a demo
           </a>
           <button
             type="button"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(o => !o)}
-            className="w-10 h-10 -mr-2 flex items-center justify-center text-gray-700 hover:text-gray-900"
+            className="w-10 h-10 -mr-2 flex items-center justify-center text-white"
           >
             {mobileOpen ? (
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
@@ -70,337 +87,160 @@ function Nav() {
             )}
           </button>
         </div>
-      </div>
+      </nav>
+
       {mobileOpen && (
-        <div className="sm:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl">
+        <div className="sm:hidden relative z-20 bg-black/80 backdrop-blur-xl">
           <div className="px-6 py-4 flex flex-col gap-1">
-            <a href="#features" onClick={close} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Features</a>
-            <a href="#team" onClick={close} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Team</a>
-            <a href={APP_URL} className="py-2.5 text-sm text-gray-700 hover:text-gray-900">Log in</a>
-            <a href={APP_URL} className="mt-2 w-full text-center text-sm font-medium text-white bg-brand-400 hover:bg-brand-500 px-4 py-3 rounded-lg transition-colors">
-              Request a demo
-            </a>
+            <a href="#product" onClick={() => setMobileOpen(false)} className="py-2.5 text-sm text-white/85">Product</a>
+            <a href="#team" onClick={() => setMobileOpen(false)} className="py-2.5 text-sm text-white/85">Team</a>
+            <a href={APP_URL} className="py-2.5 text-sm text-white/85">Log in</a>
           </div>
         </div>
       )}
-    </nav>
-  )
-}
 
-function Hero() {
-  return (
-    <section className="hero-grid relative pt-32 pb-20 px-6 overflow-hidden">
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-[1.08] tracking-tight animate-fade-up delay-1">
-            Never run out of{' '}
-            <span className="italic text-brand-400">supplies</span>{' '}
-            mid-groom
+      <div className="absolute inset-x-0 bottom-0 z-10 px-6 sm:px-8 pb-24 sm:pb-28 pointer-events-none">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-xs text-white/70 uppercase tracking-[0.18em] mb-3 sm:mb-4 drop-shadow">Tuesday &middot; 5:15pm</p>
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl text-white leading-[1.05] tracking-tight max-w-2xl drop-shadow-lg">
+            Henley walks out clean and on time.
           </h1>
-
-          <p className="mt-6 text-lg sm:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto animate-fade-up delay-2">
-            GroomCart tracks your inventory, parses invoices with AI, compares vendor prices,
-            and flags what to reorder so you can stay ahead of what's running low.
+          <p className="mt-3 sm:mt-4 font-display italic text-lg sm:text-xl md:text-2xl text-white/90 max-w-xl drop-shadow-lg">
+            Because GroomCart told her groomer to reorder ear cleaner last Friday.
           </p>
-
-          <div className="mt-10 flex items-center justify-center gap-4 animate-fade-up delay-3">
-            <a href={APP_URL} className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-400 hover:bg-brand-500 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-brand-400/20 text-[15px]">
-              Request a demo
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </a>
-            <a href="#team" className="inline-flex items-center gap-2 px-7 py-3.5 text-gray-600 hover:text-gray-900 font-medium rounded-xl border border-gray-200 hover:border-gray-300 transition-all text-[15px]">
-              Meet the team
-            </a>
-          </div>
-        </div>
-
-        {/* Product screenshot — full dashboard (md+) */}
-        <div className="hidden md:block mt-16 animate-scale-in delay-5">
-          <div className="relative max-w-4xl mx-auto">
-            <div className="absolute -inset-4 bg-gradient-to-b from-brand-50/50 to-transparent rounded-3xl -z-10" />
-            <div className="product-shadow rounded-2xl overflow-hidden border border-gray-200/60 bg-white">
-              {/* Mock dashboard screenshot */}
-              <div className="bg-gray-50 border-b border-gray-100 px-4 py-2.5 flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-200" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-200" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-200" />
-                </div>
-                <div className="flex-1 mx-12">
-                  <div className="h-5 bg-gray-100 rounded-md max-w-xs mx-auto flex items-center justify-center">
-                    <span className="text-[10px] text-gray-400">app.groomcart.com</span>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6 sm:p-8">
-                {/* Nav mock */}
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 bg-brand-400 rounded" />
-                      <span className="text-xs font-medium">GroomCart</span>
-                    </div>
-                    <div className="flex gap-3">
-                      {['Home', 'Plan', 'Inventory', 'Invoices'].map(t => (
-                        <span key={t} className={`text-[11px] px-2 py-0.5 rounded ${t === 'Home' ? 'bg-gray-100 font-medium' : 'text-gray-400'}`}>{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="h-6 px-2 rounded border border-gray-200 flex items-center">
-                      <span className="text-[10px] text-gray-400">Ask AI... ⌘K</span>
-                    </div>
-                    <div className="w-6 h-6 rounded-full bg-brand-400" />
-                  </div>
-                </div>
-
-                {/* Alert banner */}
-                <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 mb-6 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
-                      <span className="text-amber-600 text-sm">!</span>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-amber-900">5 items need reordering</p>
-                      <p className="text-xs text-amber-700">2 almost out, 3 getting low. About $187 to restock.</p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-medium text-amber-700 px-3 py-1.5 bg-amber-100 rounded-lg">Review plan →</span>
-                </div>
-
-                {/* Metric cards */}
-                <div className="grid grid-cols-4 gap-3 mb-6">
-                  {[
-                    { label: 'Almost out', value: '2', color: 'bg-red-50 text-red-700', sub: 'Order now' },
-                    { label: 'Getting low', value: '3', color: 'bg-amber-50 text-amber-700', sub: 'Order this week' },
-                    { label: 'Well stocked', value: '38', color: 'bg-green-50 text-green-700', sub: 'No action needed' },
-                    { label: 'Tracked', value: '46', color: 'bg-gray-50 text-gray-600', sub: '3 suppliers' },
-                  ].map(c => (
-                    <div key={c.label} className={`${c.color} rounded-xl p-3.5`}>
-                      <p className="text-[10px] font-medium opacity-70">{c.label}</p>
-                      <p className="text-2xl font-medium mt-0.5">{c.value}</p>
-                      <p className="text-[10px] opacity-60 mt-0.5">{c.sub}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Needs attention */}
-                <div className="border border-gray-100 rounded-xl p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-xs font-medium">Needs attention</p>
-                    <span className="text-[10px] text-brand-400 font-medium">View all 5 →</span>
-                  </div>
-                  {[
-                    { name: 'Andis #10 Blade', level: 0, max: 4, status: 'Out', color: 'bg-red-50 text-red-700' },
-                    { name: 'Bio-Groom Ear Cleaner 8oz', level: 2, max: 8, status: 'Low', color: 'bg-amber-50 text-amber-700' },
-                    { name: "Nature's Specialties Shampoo", level: 1, max: 6, status: 'Low', color: 'bg-amber-50 text-amber-700' },
-                  ].map(item => (
-                    <div key={item.name} className="flex items-center justify-between py-2 border-t border-gray-50">
-                      <span className="text-xs font-medium">{item.name}</span>
-                      <div className="flex items-center gap-3">
-                        <div className="w-16 h-1 rounded-full bg-gray-100 overflow-hidden">
-                          <div
-                            className={`h-full rounded-full ${item.level === 0 ? 'bg-red-400' : 'bg-amber-400'}`}
-                            style={{ width: `${Math.max((item.level / item.max) * 100, 4)}%` }}
-                          />
-                        </div>
-                        <span className="text-[10px] text-gray-400 w-6">{item.level}/{item.max}</span>
-                        <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${item.color}`}>{item.status}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Simplified mobile version */}
-        <div className="block md:hidden mt-12 animate-scale-in delay-5">
-          <div className="relative max-w-md mx-auto">
-            <div className="absolute -inset-3 bg-gradient-to-b from-brand-50/50 to-transparent rounded-3xl -z-10" />
-            <div className="product-shadow rounded-2xl overflow-hidden border border-gray-200/60 bg-white p-5">
-              <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                  <span className="text-amber-600 text-base">!</span>
-                </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-amber-900">5 items need reordering</p>
-                  <p className="text-xs text-amber-700">2 almost out, 3 getting low.</p>
-                </div>
-              </div>
-
-              <div className="mt-5 border border-gray-100 rounded-xl p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs font-medium">Needs attention</p>
-                  <span className="text-[10px] text-brand-400 font-medium">View all 5 →</span>
-                </div>
-                {[
-                  { name: 'Andis #10 Blade', status: 'Out', color: 'bg-red-50 text-red-700' },
-                  { name: 'Bio-Groom Ear Cleaner', status: 'Low', color: 'bg-amber-50 text-amber-700' },
-                  { name: "Nature's Specialties Shampoo", status: 'Low', color: 'bg-amber-50 text-amber-700' },
-                ].map(item => (
-                  <div key={item.name} className="flex items-center justify-between py-2 border-t border-gray-50 gap-3">
-                    <span className="text-xs font-medium truncate">{item.name}</span>
-                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded flex-shrink-0 ${item.color}`}>{item.status}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      <div className="h-20 bg-gradient-to-b from-white/0 to-white relative -mt-20 z-10 pointer-events-none" />
-    </section>
-  )
-}
 
-function PainPoints() {
-  const points = [
-    {
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="11" height="9" rx="1.5" stroke="#92400e" strokeWidth="1.2"/><rect x="7" y="7" width="11" height="9" rx="1.5" stroke="#92400e" strokeWidth="1.2" fill="white"/></svg>
-      ),
-      text: "You're juggling 3 supplier sites to find the best price",
-      sub: "PetEdge is cheapest, Ryan's ships faster — every reorder turns into a decision.",
-    },
-    {
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 3h9l3 3v11H4z" stroke="#92400e" strokeWidth="1.2" strokeLinejoin="round"/><path d="M13 3v3h3" stroke="#92400e" strokeWidth="1.2" strokeLinejoin="round"/><path d="M7 9h6M7 12h4" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
-      ),
-      text: "You ordered from memory and something slipped through",
-      sub: "Now you're paying for rush shipping or placing a second order to cover it.",
-    },
-    {
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#b91c1c" strokeWidth="1.2"/><path d="M10 6v5M10 13.5h.01" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round"/></svg>
-      ),
-      text: "You ran out of a high-use product at the worst possible time",
-      sub: "The whole afternoon gets reshuffled and someone's running to Amazon.",
-    },
-    {
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke="#92400e" strokeWidth="1.2"/><path d="M6 12V9M9 12V8M12 12v-5M15 12v-3" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
-      ),
-      text: "You have no real view of what you're spending on supplies",
-      sub: "Invoices are scattered across emails. \"How much on shampoo last quarter?\" is a research project.",
-    },
-    {
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 6l7-3 7 3v8l-7 3-7-3z" stroke="#92400e" strokeWidth="1.2" strokeLinejoin="round"/><path d="M10 8.5v3M9 9.5h2M9 11h2" stroke="#92400e" strokeWidth="1.2" strokeLinecap="round"/></svg>
-      ),
-      text: "You're placing small orders that miss the free-shipping threshold",
-      sub: "$15 here, $22 there — half of it could've been one basket.",
-    },
-    {
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="11" width="6" height="6" stroke="#92400e" strokeWidth="1.2"/><rect x="11" y="11" width="6" height="6" stroke="#92400e" strokeWidth="1.2"/><rect x="7" y="4" width="6" height="6" stroke="#92400e" strokeWidth="1.2"/></svg>
-      ),
-      text: "You over-ordered and now it's sitting on the shelf",
-      sub: "Cash tied up in product you won't touch for months — and you'll still forget the stuff you actually use.",
-    },
-  ]
-
-  return (
-    <section className="py-16 px-6 bg-gray-50/50">
-      <div className="max-w-5xl mx-auto">
-        <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-8 text-center">Sound familiar?</p>
-        <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-          {points.map((p, i) => (
-            <div key={i} className="flex items-start gap-4 bg-white rounded-xl px-6 py-4 border border-gray-100 card-hover">
-              <div className="flex-shrink-0 mt-0.5">{p.icon}</div>
-              <div className="text-left">
-                <p className="text-[15px] text-gray-700">{p.text}</p>
-                <p className="text-xs text-gray-400 mt-1">{p.sub}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className="absolute inset-x-0 bottom-0 z-10 px-6 sm:px-8 py-6 flex items-center justify-between">
+        <p className="text-xs text-white/55 uppercase tracking-[0.16em] hidden sm:block">Inventory for grooming shops</p>
+        <a href="#cta" className="ml-auto inline-flex items-center gap-2 text-sm font-medium text-gray-900 bg-white hover:bg-white/95 px-5 py-2.5 rounded-full transition-colors shadow-lg shadow-black/10">
+          See the product
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </a>
       </div>
     </section>
   )
 }
 
-function VendorStrip() {
-  const reveal = useScrollReveal()
-  const names = ["Ryan's Pet Supplies", "PetEdge", "Any supplier with PDF invoices"]
-  return (
-    <section className="py-10 px-6">
-      <div ref={reveal.ref} className={`max-w-3xl mx-auto text-center ${reveal.className}`}>
-        <p className="text-xs text-gray-400 uppercase tracking-widest mb-5">Works with suppliers you already use</p>
-        <div className="flex items-center justify-center gap-8 flex-wrap">
-          {names.map(name => (
-            <span key={name} className="text-sm font-medium text-gray-400 px-4 py-2 rounded-lg border border-gray-100 bg-gray-50/50">
-              {name}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Features() {
+function MondayMorning() {
   const reveal = useScrollReveal()
   return (
-    <section id="features" className="py-24 px-6 bg-gray-50/50">
-      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
-        <div className="text-center mb-16">
-          <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">Features</p>
-          <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
-            Everything a groomer <span className="italic">actually</span> needs
+    <section id="product" className="bg-[#fbf8ee] py-20 sm:py-28 px-6">
+      <div ref={reveal.ref} className={`max-w-5xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-center ${reveal.className}`}>
+        <div>
+          <p className="text-xs text-gray-500 uppercase tracking-[0.18em] mb-3">Five minutes before you open</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.08] tracking-tight">
+            The Monday list <span className="italic">is already written.</span>
           </h2>
-          <p className="mt-4 text-gray-500 max-w-xl mx-auto">
-            Not another booking app. GroomCart is purpose-built for the supply side of your business.
+          <p className="mt-5 text-base text-gray-600 leading-relaxed max-w-md">
+            GroomCart watches what you used last week &mdash; every appointment, every bottle, every blade &mdash; and tells you what to reorder before you've finished your coffee.
           </p>
         </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {[
-            {
-              title: 'Inventory tracking',
-              desc: "Visual stock levels with color-coded status. See at a glance what's critical, low, or well stocked across all your products.",
-              badge: 'Real-time',
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M5 23V13M12 23V8M19 23v-7M26 23H4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
-              ),
-            },
-            {
-              title: 'Smart reorder plans',
-              desc: "Based on your actual usage from bookings, not guesses. Grouped by vendor with real prices so you can place orders in minutes.",
-              badge: 'Forecast',
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="6" y="5" width="16" height="20" rx="2.5" stroke="currentColor" strokeWidth="1.4"/><rect x="10" y="3" width="8" height="4" rx="1" stroke="currentColor" strokeWidth="1.4"/><path d="M10 13l2 2 4-4M10 19l2 2 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              ),
-            },
-            {
-              title: 'Price comparison',
-              desc: 'See which vendor has the best price for every product, with full price history tracked from every invoice you upload.',
-              badge: 'Save money',
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M14 4v20M6 9h16M6 19h16" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/><path d="M3 14l3-5 3 5M3 14a3 3 0 006 0M19 14l3-5 3 5M19 14a3 3 0 006 0" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
-              ),
-            },
-            {
-              title: 'Multi-vendor support',
-              desc: "Track products across all your suppliers. Compare prices and consolidate orders so nothing slips through the cracks.",
-              badge: 'Vendors',
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.4"/><circle cx="6" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.4"/><circle cx="22" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M14 9v3M14 12l-7 8M14 12l7 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
-              ),
-            },
-          ].map(f => (
-            <div key={f.title} className="bg-white border border-gray-100 rounded-2xl p-7 card-hover">
-              <div className="w-10 h-10 rounded-lg bg-brand-50 text-brand-400 flex items-center justify-center mb-4">
-                {f.icon}
-              </div>
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="text-[17px] font-medium tracking-tight">{f.title}</h3>
-                <span className="text-[10px] font-medium text-brand-500 bg-brand-50 px-2.5 py-1 rounded-full flex-shrink-0 ml-3">{f.badge}</span>
-              </div>
-              <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
+        <div className="bg-white border border-gray-200/70 rounded-2xl overflow-hidden shadow-sm">
+          <div className="bg-gray-50 border-b border-gray-100 px-3 py-2 flex items-center gap-2">
+            <div className="flex gap-1.5">
+              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
             </div>
-          ))}
+            <span className="flex-1 text-center text-[10px] text-gray-400">app.groomcart.com</span>
+          </div>
+          <div className="p-4">
+            <div className="bg-amber-50 border border-amber-100 rounded-xl p-3.5 flex items-center justify-between mb-3.5">
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded-full bg-amber-500 text-white flex items-center justify-center text-sm font-medium">!</div>
+                <div>
+                  <p className="text-xs font-medium text-amber-900">5 items need reordering</p>
+                  <p className="text-[11px] text-amber-700">2 out, 3 low &mdash; about $187 to restock</p>
+                </div>
+              </div>
+              <span className="bg-amber-100 text-amber-800 text-[11px] font-medium px-2.5 py-1 rounded">Plan</span>
+            </div>
+            <div className="border border-gray-100 rounded-xl px-3 py-1">
+              <div className="flex items-center justify-between py-2 border-b border-gray-50 text-xs">
+                <span className="text-gray-900">Andis #10 Blade</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono text-gray-400">PetEdge</span>
+                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-red-50 text-red-700">Out</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between py-2 border-b border-gray-50 text-xs">
+                <span className="text-gray-900">Bio-Groom Ear Cleaner</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono text-gray-400">Ryan's</span>
+                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-50 text-amber-700">Low</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between py-2 text-xs">
+                <span className="text-gray-900">Nature's Specialties Shampoo</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono text-gray-400">PetEdge</span>
+                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-50 text-amber-700">Low</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function HowItWorks() {
+  const reveal = useScrollReveal()
+  return (
+    <section className="bg-white py-20 sm:py-28 px-6">
+      <div ref={reveal.ref} className={`max-w-5xl mx-auto ${reveal.className}`}>
+        <div className="text-center mb-14 sm:mb-16">
+          <p className="text-xs text-brand-400 uppercase tracking-[0.18em] mb-3">How it works</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.1] tracking-tight">
+            It learns what you use.<br className="hidden sm:block" /> So you stop running out.
+          </h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-10 md:gap-12">
+          <div>
+            <p className="font-display italic text-3xl text-brand-400 mb-3">i.</p>
+            <p className="text-base font-medium text-gray-900 mb-2">It watches.</p>
+            <p className="text-sm text-gray-500 leading-relaxed">Every appointment on the books, every product used, every PDF invoice you forward in. It knows what's flowing through your shop.</p>
+          </div>
+          <div>
+            <p className="font-display italic text-3xl text-brand-400 mb-3">ii.</p>
+            <p className="text-base font-medium text-gray-900 mb-2">It learns your patterns.</p>
+            <p className="text-sm text-gray-500 leading-relaxed">Doodle weeks burn through more shampoo than poodle weeks. Spring goes through more ear cleaner than winter. GroomCart figures out yours.</p>
+          </div>
+          <div>
+            <p className="font-display italic text-3xl text-brand-400 mb-3">iii.</p>
+            <p className="text-base font-medium text-gray-900 mb-2">It writes the order.</p>
+            <p className="text-sm text-gray-500 leading-relaxed">Sunday night, while you're on the couch. Grouped by vendor. You approve and send &mdash; or edit first. The decision is still yours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function MoneyTriptych() {
+  const reveal = useScrollReveal()
+  return (
+    <section className="bg-brand-400 py-16 sm:py-20 px-6">
+      <div ref={reveal.ref} className={`max-w-5xl mx-auto grid md:grid-cols-3 gap-8 md:gap-10 ${reveal.className}`}>
+        <div>
+          <p className="text-xs text-white/65 uppercase tracking-[0.18em] mb-3">When you don't run out</p>
+          <p className="font-display text-xl sm:text-2xl text-white leading-snug">
+            You stop paying $28 to overnight a $14 bottle.
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-white/65 uppercase tracking-[0.18em] mb-3">When you don't over-order</p>
+          <p className="font-display text-xl sm:text-2xl text-white leading-snug">
+            Cash isn't tied up on the shelf for nine months.
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-white/65 uppercase tracking-[0.18em] mb-3">When Sunday is just Sunday</p>
+          <p className="font-display text-xl sm:text-2xl text-white leading-snug">
+            You get the back end of your weekend back.
+          </p>
         </div>
       </div>
     </section>
@@ -411,47 +251,43 @@ function Team() {
   const team = [
     {
       name: 'Torren Baker',
-      role: 'Co-Founder',
       initials: 'TB',
-      bio: "Managed supply chain analytics for a portfolio of 10,000+ properties before realizing small business owners deal with the same inventory headaches, just without the tools. Built GroomCart to fix that.",
+      tag: 'supply chain',
+      bio: "Managed supply chain analytics for a portfolio of 10,000+ properties before realizing small business owners deal with the same inventory headaches, just without the tools.",
     },
     {
       name: 'Bobby Groves',
-      role: 'Co-Founder',
       initials: 'BG',
-      bio: "Former strategy consultant at L.E.K. Consulting, where he worked on consumer and healthcare engagements — including projects in the pet grooming and pet health space — giving him a close-up view of how small service businesses actually operate and where the real inefficiencies are buried. Started GroomCart because he saw how much time and margin grooming businesses lose to fragmented supply ordering.",
+      tag: 'consumer strategy',
+      bio: "Former L.E.K. strategy consultant on consumer and pet engagements — a close-up view of how small service businesses operate and where the inefficiencies are buried.",
     },
     {
       name: 'Adam Torregrossa',
-      role: 'Co-Founder',
       initials: 'AT',
-      bio: "Comes from engineering where if you run out of parts, production stops. Same problem groomers face every day. Now he's the guy who walks you through GroomCart and makes sure it actually works for your shop.",
+      tag: 'engineering',
+      bio: "Comes from engineering, where if you run out of parts, production stops. Same problem groomers face every day. Walks you through GroomCart and makes sure it works for your shop.",
     },
   ]
 
   const reveal = useScrollReveal()
   return (
-    <section id="team" className="py-24 px-6 bg-gray-50/50">
-      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
-        <div className="text-center mb-16">
-          <p className="text-sm font-medium text-brand-400 uppercase tracking-widest mb-3">Our team</p>
-          <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
-            Built by people who <span className="italic">get it</span>
+    <section id="team" className="bg-[#fbf8ee] py-20 sm:py-28 px-6">
+      <div ref={reveal.ref} className={`max-w-5xl mx-auto ${reveal.className}`}>
+        <div className="text-center mb-14">
+          <p className="text-xs text-gray-500 uppercase tracking-[0.18em] mb-3">Built by three people in Austin</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.1] tracking-tight">
+            We've been in about thirty back rooms.<br className="hidden sm:block" /> Yours could be next.
           </h2>
-          <p className="mt-4 text-gray-500 max-w-lg mx-auto">
-            We're a small team obsessed with solving the supply headaches that groomers deal with every day.
-          </p>
         </div>
-
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {team.map(t => (
-            <div key={t.name} className="bg-white border border-gray-100 rounded-2xl p-7 text-center card-hover">
-              <div className="w-20 h-20 rounded-full bg-brand-400 flex items-center justify-center text-white text-2xl font-display mx-auto mb-7 ring-2 ring-brand-200 ring-offset-4 ring-offset-white">
+            <div key={t.name} className="text-center">
+              <div className="w-16 h-16 rounded-full bg-brand-400 text-white flex items-center justify-center font-display text-xl mx-auto mb-4">
                 {t.initials}
               </div>
-              <h3 className="text-[17px] font-medium tracking-tight">{t.name}</h3>
-              <p className="text-xs text-brand-400 font-medium mt-1">{t.role}</p>
-              <p className="text-sm text-gray-500 leading-relaxed mt-4">{t.bio}</p>
+              <p className="text-base font-medium text-gray-900">{t.name}</p>
+              <p className="text-xs text-brand-400 mt-1">{t.tag}</p>
+              <p className="text-sm text-gray-500 leading-relaxed mt-3">{t.bio}</p>
             </div>
           ))}
         </div>
@@ -466,43 +302,41 @@ function FinalCTA() {
   const reveal = useScrollReveal()
 
   return (
-    <section className="py-24 px-6">
+    <section id="cta" className="bg-[#1a1411] py-20 sm:py-24 px-6">
       <div ref={reveal.ref} className={`max-w-3xl mx-auto text-center ${reveal.className}`}>
-        <h2 className="font-display text-4xl sm:text-5xl tracking-tight">
-          See GroomCart <span className="italic text-brand-400">in action</span>
+        <p className="text-xs text-white/55 uppercase tracking-[0.18em] mb-4">Working with our first shops now</p>
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white leading-[1.1] tracking-tight">
+          Twenty minutes with us, in your shop.
         </h2>
-        <p className="mt-5 text-gray-500 text-lg max-w-xl mx-auto">
-          We're working with grooming businesses now. Drop your email and we'll set up a quick walkthrough.
-        </p>
 
         {!submitted ? (
           <>
-            <div className="mt-10 flex items-center gap-3 max-w-md mx-auto">
+            <form
+              onSubmit={(e) => { e.preventDefault(); if (email.includes('@') && email.includes('.')) setSubmitted(true) }}
+              className="mt-10 flex items-center gap-2.5 max-w-md mx-auto"
+            >
               <input
                 type="email"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@yoursalon.com"
-                className="flex-1 h-12 px-4 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-300 focus:ring-2 focus:ring-brand-100 transition-all"
+                placeholder="you@yourshop.com"
+                aria-label="Your email address"
+                className="flex-1 h-12 px-4 rounded-lg bg-white/10 text-white placeholder-white/40 text-sm focus:outline-none focus:bg-white/15 transition-colors"
               />
               <button
-                onClick={() => { if (email.includes('@')) setSubmitted(true) }}
-                className="h-12 px-6 bg-brand-400 hover:bg-brand-500 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-brand-400/20 flex items-center gap-2 text-sm whitespace-nowrap"
+                type="submit"
+                className="h-12 px-5 bg-white text-gray-900 font-medium rounded-lg text-sm whitespace-nowrap hover:bg-white/90 transition-colors"
               >
-                Request a demo
+                Get a demo →
               </button>
-            </div>
-            <p className="mt-3 text-xs text-gray-400">We'll be in touch within 24 hours.</p>
+            </form>
+            <p className="mt-3 text-xs text-white/45">We'll be in touch within 24 hours.</p>
           </>
         ) : (
-          <div className="mt-10 bg-brand-50 border border-brand-100 rounded-2xl p-8 max-w-md mx-auto">
-            <div className="w-12 h-12 rounded-full bg-brand-400 flex items-center justify-center mx-auto mb-4">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M5 10l4 4 6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <p className="text-lg font-medium text-brand-600">You're on the list</p>
-            <p className="text-sm text-brand-500 mt-2">We'll reach out shortly to schedule your walkthrough.</p>
+          <div className="mt-10 max-w-md mx-auto">
+            <p className="font-display text-2xl text-white">You're on the list.</p>
+            <p className="mt-2 text-sm text-white/60">We'll reach out shortly to schedule your walkthrough.</p>
           </div>
         )}
       </div>
@@ -512,13 +346,11 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="border-t border-gray-100 py-12 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-        <Logo size="sm" />
-        <div className="flex items-center gap-6 text-xs text-gray-400">
-          <a href="mailto:hello@groomcart.com" className="hover:text-gray-600 transition-colors">Contact</a>
-        </div>
-        <p className="text-xs text-gray-300">&copy; {new Date().getFullYear()} GroomCart. All rights reserved.</p>
+    <footer className="bg-[#1a1411] border-t border-white/10 py-6 px-6">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+        <Logo size="sm" light />
+        <a href="mailto:hello@groomcart.com" className="text-xs text-white/55 hover:text-white/80 transition-colors">hello@groomcart.com</a>
+        <p className="text-xs text-white/35">&copy; {new Date().getFullYear()} GroomCart</p>
       </div>
     </footer>
   )
@@ -527,11 +359,10 @@ function Footer() {
 export default function App() {
   return (
     <div className="min-h-screen bg-white">
-      <Nav />
       <Hero />
-      <PainPoints />
-      <VendorStrip />
-      <Features />
+      <MondayMorning />
+      <HowItWorks />
+      <MoneyTriptych />
       <Team />
       <FinalCTA />
       <Footer />
