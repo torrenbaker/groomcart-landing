@@ -125,18 +125,19 @@ function Hero() {
 function MondayMorning() {
   const reveal = useScrollReveal()
   return (
-    <section id="product" className="bg-[#fbf8ee] py-20 sm:py-28 px-6">
-      <div ref={reveal.ref} className={`max-w-5xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-center ${reveal.className}`}>
-        <div>
+    <section id="product" className="bg-[#fbf8ee] pt-20 sm:pt-28 pb-12 sm:pb-16 px-6 relative">
+      <div ref={reveal.ref} className={`max-w-6xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-12 items-start ${reveal.className}`}>
+        <div className="lg:col-span-5 lg:pt-10">
           <p className="text-xs text-gray-500 uppercase tracking-[0.18em] mb-3">Five minutes before you open</p>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.08] tracking-tight">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.05] tracking-tight">
             The Monday list <span className="italic">is already written.</span>
           </h2>
           <p className="mt-5 text-base text-gray-600 leading-relaxed max-w-md">
             GroomCart watches what you used last week &mdash; every appointment, every bottle, every blade &mdash; and tells you what to reorder before you've finished your coffee.
           </p>
+          <p className="mt-10 text-xs text-gray-400 italic">&mdash; Sample readout, a Monday in May.</p>
         </div>
-        <div className="bg-white border border-gray-200/70 rounded-2xl overflow-hidden shadow-sm">
+        <div className="lg:col-span-7 relative z-10 lg:-mb-40 lg:mr-[-2rem] xl:mr-[-3rem] bg-white border border-gray-200/70 rounded-2xl overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.12)]">
           <div className="bg-gray-50 border-b border-gray-100 px-3 py-2 flex items-center gap-2">
             <div className="flex gap-1.5">
               <div className="w-2 h-2 rounded-full bg-gray-300"></div>
@@ -189,29 +190,38 @@ function MondayMorning() {
 function HowItWorks() {
   const reveal = useScrollReveal()
   return (
-    <section className="bg-white py-20 sm:py-28 px-6">
+    <section className="bg-white pt-32 sm:pt-48 lg:pt-64 pb-24 sm:pb-32 px-6 relative">
       <div ref={reveal.ref} className={`max-w-5xl mx-auto ${reveal.className}`}>
-        <div className="text-center mb-14 sm:mb-16">
+        <div className="mb-20 sm:mb-28 max-w-xl">
           <p className="text-xs text-brand-400 uppercase tracking-[0.18em] mb-3">How it works</p>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.1] tracking-tight">
-            It learns what you use.<br className="hidden sm:block" /> So you stop running out.
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.05] tracking-tight">
+            It learns what you use. <span className="italic">So you stop running out.</span>
           </h2>
         </div>
-        <div className="grid md:grid-cols-3 gap-10 md:gap-12">
-          <div>
-            <p className="font-display italic text-3xl text-brand-400 mb-3">i.</p>
-            <p className="text-base font-medium text-gray-900 mb-2">It watches.</p>
-            <p className="text-sm text-gray-500 leading-relaxed">Every appointment on the books, every product used, every PDF invoice you forward in. It knows what's flowing through your shop.</p>
+
+        <div className="space-y-20 sm:space-y-28">
+          <div className="flex gap-6 sm:gap-10 items-baseline max-w-2xl">
+            <p className="font-display italic text-5xl sm:text-7xl text-brand-400 flex-shrink-0 leading-none">i.</p>
+            <div>
+              <p className="font-display text-2xl sm:text-3xl text-gray-900 mb-3 leading-snug">It watches.</p>
+              <p className="text-base text-gray-500 leading-relaxed">Every appointment on the books, every product used, every PDF invoice you forward in. It knows what's flowing through your shop.</p>
+            </div>
           </div>
-          <div>
-            <p className="font-display italic text-3xl text-brand-400 mb-3">ii.</p>
-            <p className="text-base font-medium text-gray-900 mb-2">It learns your patterns.</p>
-            <p className="text-sm text-gray-500 leading-relaxed">Doodle weeks burn through more shampoo than poodle weeks. Spring goes through more ear cleaner than winter. GroomCart figures out yours.</p>
+
+          <div className="flex gap-6 sm:gap-10 items-baseline max-w-2xl ml-auto">
+            <p className="font-display italic text-5xl sm:text-7xl text-brand-400 flex-shrink-0 leading-none">ii.</p>
+            <div>
+              <p className="font-display text-2xl sm:text-3xl text-gray-900 mb-3 leading-snug">It learns your patterns.</p>
+              <p className="text-base text-gray-500 leading-relaxed">Doodle weeks burn through more shampoo than poodle weeks. Spring goes through more ear cleaner than winter. GroomCart figures out yours.</p>
+            </div>
           </div>
-          <div>
-            <p className="font-display italic text-3xl text-brand-400 mb-3">iii.</p>
-            <p className="text-base font-medium text-gray-900 mb-2">It writes the order.</p>
-            <p className="text-sm text-gray-500 leading-relaxed">Sunday night, while you're on the couch. Grouped by vendor. You approve and send &mdash; or edit first. The decision is still yours.</p>
+
+          <div className="flex gap-6 sm:gap-10 items-baseline max-w-2xl mx-auto">
+            <p className="font-display italic text-5xl sm:text-7xl text-brand-400 flex-shrink-0 leading-none">iii.</p>
+            <div>
+              <p className="font-display text-2xl sm:text-3xl text-gray-900 mb-3 leading-snug">It writes the order.</p>
+              <p className="text-base text-gray-500 leading-relaxed">Sunday night, while you're on the couch. Grouped by vendor. You approve and send &mdash; or edit first. The decision is still yours.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -222,26 +232,12 @@ function HowItWorks() {
 function MoneyTriptych() {
   const reveal = useScrollReveal()
   return (
-    <section className="bg-brand-400 py-16 sm:py-20 px-6">
-      <div ref={reveal.ref} className={`max-w-5xl mx-auto grid md:grid-cols-3 gap-8 md:gap-10 ${reveal.className}`}>
-        <div>
-          <p className="text-xs text-white/65 uppercase tracking-[0.18em] mb-3">When you don't run out</p>
-          <p className="font-display text-xl sm:text-2xl text-white leading-snug">
-            You stop paying $28 to overnight a $14 bottle.
-          </p>
-        </div>
-        <div>
-          <p className="text-xs text-white/65 uppercase tracking-[0.18em] mb-3">When you don't over-order</p>
-          <p className="font-display text-xl sm:text-2xl text-white leading-snug">
-            Cash isn't tied up on the shelf for nine months.
-          </p>
-        </div>
-        <div>
-          <p className="text-xs text-white/65 uppercase tracking-[0.18em] mb-3">When Sunday is just Sunday</p>
-          <p className="font-display text-xl sm:text-2xl text-white leading-snug">
-            You get the back end of your weekend back.
-          </p>
-        </div>
+    <section className="bg-brand-400 py-24 sm:py-32 lg:py-40 px-6 relative overflow-hidden">
+      <div ref={reveal.ref} className={`max-w-6xl mx-auto ${reveal.className}`}>
+        <p className="text-xs text-white/55 uppercase tracking-[0.22em] mb-10 sm:mb-14">&mdash; What changes</p>
+        <p className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] text-white leading-[1.18] tracking-tight max-w-4xl">
+          When you don't run out, you stop paying <span className="italic">$28 to overnight a $14 bottle.</span> When you don't over-order, cash isn't tied up on the shelf for nine months. And when Sunday is just Sunday, you get <span className="italic">the back end of your weekend back.</span>
+        </p>
       </div>
     </section>
   )
@@ -271,23 +267,28 @@ function Team() {
 
   const reveal = useScrollReveal()
   return (
-    <section id="team" className="bg-[#fbf8ee] py-20 sm:py-28 px-6">
-      <div ref={reveal.ref} className={`max-w-5xl mx-auto ${reveal.className}`}>
-        <div className="text-center mb-14">
+    <section id="team" className="bg-[#fbf8ee] py-24 sm:py-32 px-6">
+      <div ref={reveal.ref} className={`max-w-6xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20 ${reveal.className}`}>
+        <div className="lg:col-span-5">
           <p className="text-xs text-gray-500 uppercase tracking-[0.18em] mb-3">Built by three people in Austin</p>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.1] tracking-tight">
-            We've been in about thirty back rooms.<br className="hidden sm:block" /> Yours could be next.
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.05] tracking-tight">
+            We've been in about thirty back rooms. <span className="italic">Yours could be next.</span>
           </h2>
         </div>
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {team.map(t => (
-            <div key={t.name} className="text-center">
-              <div className="w-16 h-16 rounded-full bg-brand-400 text-white flex items-center justify-center font-display text-xl mx-auto mb-4">
+        <div className="lg:col-span-7 space-y-12 lg:space-y-14">
+          {team.map((t, i) => (
+            <div
+              key={t.name}
+              className={`flex gap-5 sm:gap-6 ${i === 1 ? 'lg:pl-12' : i === 2 ? 'lg:pl-4' : ''}`}
+            >
+              <div className={`rounded-full bg-brand-400 text-white flex items-center justify-center font-display flex-shrink-0 ${i === 0 ? 'w-20 h-20 text-2xl' : 'w-14 h-14 text-lg'}`}>
                 {t.initials}
               </div>
-              <p className="text-base font-medium text-gray-900">{t.name}</p>
-              <p className="text-xs text-brand-400 mt-1">{t.tag}</p>
-              <p className="text-sm text-gray-500 leading-relaxed mt-3">{t.bio}</p>
+              <div className="pt-1">
+                <p className="text-base font-medium text-gray-900">{t.name}</p>
+                <p className="text-xs text-brand-400 mt-1">{t.tag}</p>
+                <p className="text-sm text-gray-500 leading-relaxed mt-3 max-w-md">{t.bio}</p>
+              </div>
             </div>
           ))}
         </div>
