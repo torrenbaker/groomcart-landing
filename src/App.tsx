@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 const APP_URL = 'https://app.groomcart.com'
-const HERO_VIDEO = '/hero-loop.mp4'
-const HERO_POSTER = '/hero-poster.jpg'
+const HERO_VIDEO = `${import.meta.env.BASE_URL}hero-loop.mp4`
+const HERO_POSTER = `${import.meta.env.BASE_URL}hero-poster.jpg`
 
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null)
