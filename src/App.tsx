@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 const APP_URL = 'https://app.groomcart.com'
-const HERO_VIDEO = `${import.meta.env.BASE_URL}hero-loop.mp4`
-const HERO_POSTER = `${import.meta.env.BASE_URL}hero-poster.jpg`
+const BOBBY_PHOTO = `${import.meta.env.BASE_URL}bobby.jpeg`
+const TORREN_PHOTO = `${import.meta.env.BASE_URL}torren.jpeg`
 
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null)
@@ -42,8 +42,7 @@ function Nav() {
           <Wordmark />
           <div className="hidden sm:flex items-center gap-7">
             <a href="#product" className="text-xs text-[#1d1d1f] hover:opacity-60 transition-opacity">Product</a>
-            <a href="#proof" className="text-xs text-[#1d1d1f] hover:opacity-60 transition-opacity">Customers</a>
-            <a href="#about" className="text-xs text-[#1d1d1f] hover:opacity-60 transition-opacity">About</a>
+            <a href="#team" className="text-xs text-[#1d1d1f] hover:opacity-60 transition-opacity">Team</a>
             <a href="#cta" className="text-xs text-[#1d1d1f] hover:opacity-60 transition-opacity">Book a demo</a>
           </div>
         </div>
@@ -68,8 +67,7 @@ function Nav() {
         <div className="sm:hidden bg-white border-b border-black/5">
           <div className="px-6 py-3 flex flex-col">
             <a href="#product" onClick={close} className="py-2 text-sm text-[#1d1d1f]">Product</a>
-            <a href="#proof" onClick={close} className="py-2 text-sm text-[#1d1d1f]">Customers</a>
-            <a href="#about" onClick={close} className="py-2 text-sm text-[#1d1d1f]">About</a>
+            <a href="#team" onClick={close} className="py-2 text-sm text-[#1d1d1f]">Team</a>
             <a href="#cta" onClick={close} className="py-2 text-sm text-[#1d1d1f]">Book a demo</a>
             <a href={APP_URL} className="py-2 text-sm text-[#1d1d1f]">Sign in</a>
           </div>
@@ -90,31 +88,34 @@ function ChevronLink({ href, children, dark = false }: { href: string; children:
 
 function HeroTile() {
   return (
-    <section className="bg-[#f5f5f7] rounded-[18px] min-h-[560px] sm:min-h-[640px] px-6 sm:px-10 pt-14 sm:pt-20 pb-0 flex flex-col items-center text-center overflow-hidden">
-      <p className="text-[13px] font-medium text-[#6e6e73] mb-2">Inventory for the back room</p>
-      <h1 className="font-display-tile text-3xl sm:text-5xl md:text-[56px] text-[#1d1d1f] leading-[1.04] tracking-tight max-w-[14ch] mx-auto">
+    <section className="bg-[#f5f5f7] rounded-[18px] min-h-[420px] sm:min-h-[480px] px-6 sm:px-10 py-20 sm:py-28 flex flex-col items-center justify-center text-center overflow-hidden">
+      <p className="text-[13px] font-medium text-[#6e6e73] mb-3">Inventory for the back room</p>
+      <h1 className="font-display-tile text-3xl sm:text-5xl md:text-6xl text-[#1d1d1f] leading-[1.04] tracking-tight max-w-[14ch] mx-auto">
         Built for the working grooming shop.
       </h1>
-      <p className="text-base sm:text-lg text-[#6e6e73] mt-4 max-w-[28ch] leading-snug">
+      <p className="text-base sm:text-lg text-[#6e6e73] mt-5 max-w-[28ch] leading-snug">
         It watches what you use, parses your invoices, and writes Monday's reorder list.
       </p>
-      <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-5">
-        <ChevronLink href="#product">Watch the demo</ChevronLink>
+      <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-6">
+        <ChevronLink href="#product">See how it works</ChevronLink>
         <ChevronLink href="#cta">Book a 20-min call</ChevronLink>
       </div>
-      <div className="mt-auto w-[94%] max-w-[640px] pt-10">
-        <div className="rounded-t-2xl overflow-hidden shadow-[0_-12px_40px_-12px_rgba(0,0,0,0.12)]">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={HERO_POSTER}
-            className="block w-full h-auto"
-          >
-            <source src={HERO_VIDEO} type="video/mp4" />
-          </video>
-        </div>
+    </section>
+  )
+}
+
+function SoundFamiliarTile() {
+  const reveal = useScrollReveal()
+  return (
+    <section className="bg-[#f5f5f7] rounded-[18px] min-h-[260px] px-6 sm:px-10 py-14 sm:py-16 flex flex-col items-center justify-center text-center">
+      <div ref={reveal.ref} className={`${reveal.className} flex flex-col items-center`}>
+        <p className="text-[13px] font-medium text-[#6e6e73] mb-3">Sound familiar?</p>
+        <p className="font-display-tile text-xl sm:text-2xl md:text-[26px] text-[#1d1d1f] leading-[1.3] max-w-[26ch]">
+          You're juggling three supplier sites. You ordered from memory and missed something. You can't tell where your supply money goes.
+        </p>
+        <p className="text-sm text-[#6e6e73] mt-3 max-w-[36ch] leading-relaxed">
+          It doesn't have to be like this.
+        </p>
       </div>
     </section>
   )
@@ -198,6 +199,53 @@ function ItemRow({ name, vendor, status, border = false }: { name: string; vendo
   )
 }
 
+function SmartReorderTile() {
+  const reveal = useScrollReveal()
+  return (
+    <section className="bg-[#fff8e7] rounded-[18px] min-h-[440px] sm:min-h-[480px] px-6 sm:px-8 pt-12 pb-0 flex flex-col overflow-hidden">
+      <div ref={reveal.ref} className={`flex flex-col w-full ${reveal.className}`}>
+        <p className="text-[12px] font-medium text-[#8a6320] mb-1.5">Smart reorder plans</p>
+        <h3 className="font-display-tile text-2xl sm:text-3xl text-[#1d1d1f] leading-[1.06] tracking-tight">
+          Forecast, not<br />
+          guesswork.
+        </h3>
+        <p className="text-sm text-[#6b4a0a] mt-3 max-w-[28ch] leading-snug">
+          Built from your actual usage from bookings, grouped by vendor with real prices.
+        </p>
+        <div className="mt-3">
+          <ChevronLink href="#product">See the product</ChevronLink>
+        </div>
+      </div>
+      <div className="mt-auto pt-8">
+        <div className="bg-white rounded-t-xl p-3.5 shadow-[0_4px_14px_rgba(58,42,24,0.06)] -mx-3 -mb-0.5">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[11px] font-semibold text-[#1d1d1f]">Week of May 11</p>
+            <span className="text-[10px] font-medium text-[#2d8a52]">Approve all →</span>
+          </div>
+          <div className="bg-[#fafaf6] border border-[#ebe2c8]/80 rounded-md px-2.5 py-2 mb-1.5">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-[11px] font-medium text-[#1d1d1f]">PetEdge</span>
+              <span className="text-[10px] font-mono text-[#6b6b6b]">$112.49</span>
+            </div>
+            <div className="flex justify-between py-0.5 text-[10px] text-[#6b6b6b] border-t border-dashed border-[#ebe2c8]">
+              <span>Andis Blade × 1</span><span>$32.99</span>
+            </div>
+            <div className="flex justify-between py-0.5 text-[10px] text-[#6b6b6b]">
+              <span>N.S. Shampoo × 1</span><span>$42.00</span>
+            </div>
+          </div>
+          <div className="bg-[#fafaf6] border border-[#ebe2c8]/80 rounded-md px-2.5 py-2">
+            <div className="flex justify-between items-center">
+              <span className="text-[11px] font-medium text-[#1d1d1f]">Ryan's Pet</span>
+              <span className="text-[10px] font-mono text-[#6b6b6b]">$74.50</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function InvoiceIntakeTile() {
   const reveal = useScrollReveal()
   return (
@@ -212,7 +260,7 @@ function InvoiceIntakeTile() {
           Forward your supplier emails. Every line item lands in your records, every product matched.
         </p>
         <div className="mt-3">
-          <ChevronLink href="#cta">See the product</ChevronLink>
+          <ChevronLink href="#product">See the product</ChevronLink>
         </div>
       </div>
       <div className="mt-auto pt-8 relative h-[180px]">
@@ -243,51 +291,59 @@ function InvoiceIntakeTile() {
   )
 }
 
-function CustomerQuoteTile() {
+function TeamTile() {
   const reveal = useScrollReveal()
   return (
     <section
-      id="proof"
-      className="bg-[#fff8e7] rounded-[18px] min-h-[440px] sm:min-h-[480px] px-6 sm:px-8 pt-12 pb-0 flex flex-col overflow-hidden"
+      id="team"
+      className="bg-[#e8f1ec] rounded-[18px] min-h-[520px] px-6 sm:px-10 pt-14 sm:pt-16 pb-12 flex flex-col items-center text-center overflow-hidden"
     >
-      <div ref={reveal.ref} className={`flex flex-col w-full ${reveal.className}`}>
-        <p className="text-[12px] font-medium text-[#8a6320] mb-1.5">From a pilot shop</p>
-        <h3 className="font-display-tile text-lg sm:text-xl text-[#1d1d1f] leading-[1.18] tracking-tight max-w-[28ch]">
-          “I used to lose an hour every Sunday on this. Now I just look at the screen Monday morning and know what to order.”
-        </h3>
-        <p className="text-xs text-[#6b4a0a] mt-3 leading-relaxed">
-          <span className="font-semibold text-[#1d1d1f]">Sarah</span> · The Wash House · Decatur, GA<br />
-          Four-table shop · on GroomCart since February
+      <div ref={reveal.ref} className={`flex flex-col items-center w-full ${reveal.className}`}>
+        <p className="text-[13px] font-medium text-[#5a7a68] mb-2">The team</p>
+        <h2 className="font-display-tile text-3xl sm:text-4xl md:text-5xl text-[#1f3027] leading-[1.04] tracking-tight max-w-[18ch] mx-auto">
+          Three people who've been in about thirty back rooms.
+        </h2>
+        <p className="text-base sm:text-lg text-[#5a7a68] mt-4 max-w-[32ch] leading-snug">
+          Built in Austin by people obsessed with the supply headaches groomers actually face.
         </p>
-        <div className="mt-3">
-          <ChevronLink href="#proof">Read more from pilot shops</ChevronLink>
+        <div className="mt-5">
+          <a href="#cta" className="text-[#2d5a3a] text-sm sm:text-base hover:underline whitespace-nowrap">
+            Meet the team <span className="text-xs">›</span>
+          </a>
         </div>
-      </div>
-      <div className="mt-auto pt-8">
-        {/* PLACEHOLDER: replace with real photo of Sarah at her station when shoot is done.
-             Recommended: portrait photo, soft natural light, real shop background, ~1.8:1 aspect. */}
-        <div
-          className="rounded-t-xl overflow-hidden bg-[#c8a888]"
-          style={{ aspectRatio: '1.8 / 1' }}
-        >
-          <svg viewBox="0 0 320 178" className="block w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <rect width="320" height="178" fill="#c8a888" />
-            <rect width="320" height="50" y="128" fill="#a47d52" />
-            <ellipse cx="160" cy="138" rx="120" ry="10" fill="#5a3f23" opacity="0.35" />
-            <ellipse cx="180" cy="138" rx="48" ry="32" fill="#1f3027" />
-            <ellipse cx="180" cy="118" rx="38" ry="32" fill="#dac6a8" />
-            <rect x="160" y="106" width="40" height="14" fill="#8b6f4e" />
-            <ellipse cx="180" cy="108" rx="40" ry="6" fill="#5a3f23" />
-            <ellipse cx="166" cy="120" rx="3" ry="4" fill="#1f1c14" />
-            <ellipse cx="194" cy="120" rx="3" ry="4" fill="#1f1c14" />
-            <ellipse cx="180" cy="132" rx="2.5" ry="2" fill="#1f1c14" />
-            <ellipse cx="80" cy="148" rx="32" ry="20" fill="#f5e8d0" />
-            <ellipse cx="80" cy="124" rx="28" ry="22" fill="#f5e8d0" />
-            <ellipse cx="64" cy="116" rx="9" ry="16" fill="#e8d4b0" />
-            <ellipse cx="96" cy="116" rx="9" ry="16" fill="#e8d4b0" />
-            <circle cx="72" cy="124" r="2.5" fill="#1f1c14" />
-            <circle cx="88" cy="124" r="2.5" fill="#1f1c14" />
-          </svg>
+        <div className="mt-12 sm:mt-16 grid grid-cols-3 gap-4 sm:gap-6 w-full max-w-[600px]">
+          <div className="text-center">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-[#c8d8d0] shadow-[0_4px_14px_rgba(31,48,39,0.08)]">
+              <img
+                src={TORREN_PHOTO}
+                alt="Torren Baker"
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <p className="text-sm sm:text-[15px] font-semibold text-[#1f3027] mt-3">Torren Baker</p>
+            <p className="text-[11px] sm:text-xs text-[#5a7a68] mt-0.5">supply chain</p>
+          </div>
+          <div className="text-center">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-[#c8d8d0] shadow-[0_4px_14px_rgba(31,48,39,0.08)]">
+              <img
+                src={BOBBY_PHOTO}
+                alt="Bobby Groves"
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <p className="text-sm sm:text-[15px] font-semibold text-[#1f3027] mt-3">Bobby Groves</p>
+            <p className="text-[11px] sm:text-xs text-[#5a7a68] mt-0.5">consumer strategy</p>
+          </div>
+          <div className="text-center">
+            {/* PLACEHOLDER: replace with adam.jpeg when photo is ready. Same crop/aspect as the others. */}
+            <div className="aspect-square rounded-2xl overflow-hidden bg-[#2d5a3a] flex items-center justify-center shadow-[0_4px_14px_rgba(31,48,39,0.08)]">
+              <span className="font-display-tile text-3xl sm:text-4xl text-[#e8f1ec]">AT</span>
+            </div>
+            <p className="text-sm sm:text-[15px] font-semibold text-[#1f3027] mt-3">Adam Torregrossa</p>
+            <p className="text-[11px] sm:text-xs text-[#5a7a68] mt-0.5">engineering</p>
+          </div>
         </div>
       </div>
     </section>
@@ -348,7 +404,7 @@ function FinalCTATile() {
 
 function Footer() {
   return (
-    <footer id="about" className="bg-[#f5f5f7] py-5 px-6">
+    <footer className="bg-[#f5f5f7] py-5 px-6">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#6e6e73]">
         <p>GroomCart · Austin, TX · {new Date().getFullYear()}</p>
         <p>Backed by Y Combinator · About · Privacy</p>
@@ -363,11 +419,13 @@ export default function App() {
       <Nav />
       <main className="p-3 space-y-3">
         <HeroTile />
+        <SoundFamiliarTile />
         <MondayViewTile />
         <div className="grid md:grid-cols-2 gap-3">
+          <SmartReorderTile />
           <InvoiceIntakeTile />
-          <CustomerQuoteTile />
         </div>
+        <TeamTile />
         <FinalCTATile />
       </main>
       <Footer />
