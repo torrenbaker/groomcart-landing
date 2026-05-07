@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 const APP_URL = 'https://app.groomcart.com'
 const BOBBY_PHOTO = `${import.meta.env.BASE_URL}bobby.jpeg`
 const TORREN_PHOTO = `${import.meta.env.BASE_URL}torren.jpeg`
+const ADAM_PHOTO = `${import.meta.env.BASE_URL}adam2.jpeg`
+const LOGO_URL = `${import.meta.env.BASE_URL}logo.png`
 
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null)
@@ -25,8 +27,8 @@ function useScrollReveal() {
 function Wordmark() {
   return (
     <div className="flex items-center gap-1.5">
-      <div className="w-3.5 h-3.5 bg-[#1d1d1f] rounded-[3px]"></div>
-      <span className="text-xs font-medium text-[#1d1d1f]">groomcart</span>
+      <img src={LOGO_URL} alt="GroomCart" className="w-5 h-5 object-contain" />
+      <span className="text-sm font-medium text-[#1d1d1f]">groomcart</span>
     </div>
   )
 }
@@ -86,19 +88,50 @@ function ChevronLink({ href, children, dark = false }: { href: string; children:
   )
 }
 
+function Paw({ className = '', rotate = 0, scale = 1, opacity = 0.10 }: { className?: string; rotate?: number; scale?: number; opacity?: number }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={`absolute pointer-events-none text-[#1d1d1f] ${className}`}
+      style={{ opacity, transform: `rotate(${rotate}deg) scale(${scale})`, transformOrigin: 'center' }}
+      viewBox="0 0 60 64"
+      fill="currentColor"
+    >
+      {/* Main pad */}
+      <path d="M30 38 C 18 38 12 48 12 54 C 12 60 16 62 22 62 L 38 62 C 44 62 48 60 48 54 C 48 48 42 38 30 38 Z" />
+      {/* Four toe beans */}
+      <ellipse cx="10" cy="22" rx="6" ry="9" />
+      <ellipse cx="22" cy="10" rx="6" ry="9" />
+      <ellipse cx="38" cy="10" rx="6" ry="9" />
+      <ellipse cx="50" cy="22" rx="6" ry="9" />
+    </svg>
+  )
+}
+
 function HeroTile() {
   return (
-    <section className="bg-[#f5f5f7] rounded-[18px] min-h-[420px] sm:min-h-[480px] px-6 sm:px-10 py-20 sm:py-28 flex flex-col items-center justify-center text-center overflow-hidden">
-      <p className="text-[13px] font-medium text-[#6e6e73] mb-3">Inventory for the back room</p>
-      <h1 className="font-display-tile text-3xl sm:text-5xl md:text-6xl text-[#1d1d1f] leading-[1.04] tracking-tight max-w-[14ch] mx-auto">
-        Built for the working grooming shop.
-      </h1>
-      <p className="text-base sm:text-lg text-[#6e6e73] mt-5 max-w-[28ch] leading-snug">
-        It watches what you use, parses your invoices, and writes Monday's reorder list.
-      </p>
-      <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-6">
-        <ChevronLink href="#product">See how it works</ChevronLink>
-        <ChevronLink href="#cta">Book a 20-min call</ChevronLink>
+    <section className="relative bg-[#f5f5f7] rounded-[18px] min-h-[420px] sm:min-h-[480px] px-6 sm:px-10 py-20 sm:py-28 flex flex-col items-center justify-center text-center overflow-hidden">
+      {/* Wandering paw trail — diagonal across the tile, behind text */}
+      <Paw className="top-[10%] left-[6%] w-10 sm:w-12" rotate={-22} scale={1} opacity={0.11} />
+      <Paw className="top-[28%] left-[16%] w-10 sm:w-11" rotate={-8} scale={0.9} opacity={0.10} />
+      <Paw className="bottom-[14%] left-[10%] w-10 sm:w-12" rotate={-32} scale={1.05} opacity={0.11} />
+      <Paw className="bottom-[8%] left-[42%] w-10 sm:w-11" rotate={8} scale={0.95} opacity={0.10} />
+      <Paw className="bottom-[20%] right-[14%] w-10 sm:w-12" rotate={22} scale={1} opacity={0.11} />
+      <Paw className="top-[26%] right-[8%] w-10 sm:w-11" rotate={28} scale={0.92} opacity={0.10} />
+
+      {/* Foreground content */}
+      <div className="relative z-10 flex flex-col items-center">
+        <p className="text-[13px] font-medium text-[#6e6e73] mb-3">Inventory for the back room</p>
+        <h1 className="font-display-tile text-3xl sm:text-5xl md:text-6xl text-[#1d1d1f] leading-[1.04] tracking-tight max-w-[16ch] mx-auto">
+          The supply system for grooming shops.
+        </h1>
+        <p className="text-base sm:text-lg text-[#6e6e73] mt-5 max-w-[44ch] leading-snug">
+          Tracks your inventory. Parses invoices with AI. Compares vendor prices. Flags what to reorder before you run out.
+        </p>
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-6">
+          <ChevronLink href="#product">See how it works</ChevronLink>
+          <ChevronLink href="#cta">Show me GroomCart</ChevronLink>
+        </div>
       </div>
     </section>
   )
@@ -136,9 +169,6 @@ function MondayViewTile() {
         <p className="text-base sm:text-lg text-[#a1a1a6] mt-4 max-w-[32ch] leading-snug">
           5 items to reorder. Grouped by vendor. Drafted while you slept.
         </p>
-        <div className="mt-5">
-          <ChevronLink href="#cta" dark>See the product</ChevronLink>
-        </div>
         <div className="mt-auto w-full max-w-[600px] pt-10">
           <div className="bg-[#2a2a2c] rounded-t-[14px] p-4 sm:p-5 text-left">
             <div className="bg-[#c98c1e]/15 border border-[#f3e2b3]/30 rounded-xl p-3 flex items-center justify-between mb-3">
@@ -212,9 +242,6 @@ function SmartReorderTile() {
         <p className="text-sm text-[#6b4a0a] mt-3 max-w-[28ch] leading-snug">
           Built from your actual usage from bookings, grouped by vendor with real prices.
         </p>
-        <div className="mt-3">
-          <ChevronLink href="#product">See the product</ChevronLink>
-        </div>
       </div>
       <div className="mt-auto pt-8">
         <div className="bg-white rounded-t-xl p-3.5 shadow-[0_4px_14px_rgba(58,42,24,0.06)] -mx-3 -mb-0.5">
@@ -259,9 +286,6 @@ function InvoiceIntakeTile() {
         <p className="text-sm text-[#6e6e73] mt-3 max-w-[28ch] leading-snug">
           Forward your supplier emails. Every line item lands in your records, every product matched.
         </p>
-        <div className="mt-3">
-          <ChevronLink href="#product">See the product</ChevronLink>
-        </div>
       </div>
       <div className="mt-auto pt-8 relative h-[180px]">
         <div
@@ -291,59 +315,63 @@ function InvoiceIntakeTile() {
   )
 }
 
+function TeamMember({ photo, initials, name, role, bio, align = 'left' }: { photo?: string; initials?: string; name: string; role: string; bio: string; align?: 'left' | 'right' }) {
+  const reverse = align === 'right'
+  return (
+    <div className={`flex flex-col ${reverse ? 'sm:flex-row-reverse' : 'sm:flex-row'} items-center gap-6 sm:gap-9`}>
+      <div className="w-[140px] sm:w-[170px] aspect-square rounded-2xl overflow-hidden bg-[#c8d8d0] flex-shrink-0 shadow-[0_6px_18px_rgba(31,48,39,0.10)]">
+        {photo ? (
+          <img src={photo} alt={name} loading="lazy" className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full bg-[#2d5a3a] flex items-center justify-center">
+            <span className="font-display-tile text-3xl sm:text-4xl text-[#e8f1ec]">{initials}</span>
+          </div>
+        )}
+      </div>
+      <div className={`flex-1 min-w-0 text-center ${reverse ? 'sm:text-right' : 'sm:text-left'}`}>
+        <p className="font-semibold text-[#1f3027] text-lg sm:text-xl">{name}</p>
+        <p className="text-[11px] sm:text-xs text-[#5a7a68] mt-1 uppercase tracking-[0.08em]">{role}</p>
+        <p className="text-sm sm:text-[15px] text-[#2d4438] mt-3 leading-relaxed">{bio}</p>
+      </div>
+    </div>
+  )
+}
+
 function TeamTile() {
   const reveal = useScrollReveal()
   return (
     <section
       id="team"
-      className="bg-[#e8f1ec] rounded-[18px] min-h-[520px] px-6 sm:px-10 pt-14 sm:pt-16 pb-12 flex flex-col items-center text-center overflow-hidden"
+      className="bg-[#e8f1ec] rounded-[18px] px-6 sm:px-10 pt-14 sm:pt-16 pb-14 sm:pb-16 flex flex-col items-center overflow-hidden"
     >
       <div ref={reveal.ref} className={`flex flex-col items-center w-full ${reveal.className}`}>
         <p className="text-[13px] font-medium text-[#5a7a68] mb-2">The team</p>
-        <h2 className="font-display-tile text-3xl sm:text-4xl md:text-5xl text-[#1f3027] leading-[1.04] tracking-tight max-w-[18ch] mx-auto">
-          Three people who've been in about thirty back rooms.
+        <h2 className="font-display-tile text-3xl sm:text-4xl md:text-5xl text-[#1f3027] leading-[1.04] tracking-tight text-center">
+          The three of us.
         </h2>
-        <p className="text-base sm:text-lg text-[#5a7a68] mt-4 max-w-[32ch] leading-snug">
-          Built in Austin by people obsessed with the supply headaches groomers actually face.
-        </p>
-        <div className="mt-5">
-          <a href="#cta" className="text-[#2d5a3a] text-sm sm:text-base hover:underline whitespace-nowrap">
-            Meet the team <span className="text-xs">›</span>
-          </a>
-        </div>
-        <div className="mt-12 sm:mt-16 grid grid-cols-3 gap-4 sm:gap-6 w-full max-w-[600px]">
-          <div className="text-center">
-            <div className="aspect-square rounded-2xl overflow-hidden bg-[#c8d8d0] shadow-[0_4px_14px_rgba(31,48,39,0.08)]">
-              <img
-                src={TORREN_PHOTO}
-                alt="Torren Baker"
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <p className="text-sm sm:text-[15px] font-semibold text-[#1f3027] mt-3">Torren Baker</p>
-            <p className="text-[11px] sm:text-xs text-[#5a7a68] mt-0.5">supply chain</p>
-          </div>
-          <div className="text-center">
-            <div className="aspect-square rounded-2xl overflow-hidden bg-[#c8d8d0] shadow-[0_4px_14px_rgba(31,48,39,0.08)]">
-              <img
-                src={BOBBY_PHOTO}
-                alt="Bobby Groves"
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <p className="text-sm sm:text-[15px] font-semibold text-[#1f3027] mt-3">Bobby Groves</p>
-            <p className="text-[11px] sm:text-xs text-[#5a7a68] mt-0.5">consumer strategy</p>
-          </div>
-          <div className="text-center">
-            {/* PLACEHOLDER: replace with adam.jpeg when photo is ready. Same crop/aspect as the others. */}
-            <div className="aspect-square rounded-2xl overflow-hidden bg-[#2d5a3a] flex items-center justify-center shadow-[0_4px_14px_rgba(31,48,39,0.08)]">
-              <span className="font-display-tile text-3xl sm:text-4xl text-[#e8f1ec]">AT</span>
-            </div>
-            <p className="text-sm sm:text-[15px] font-semibold text-[#1f3027] mt-3">Adam Torregrossa</p>
-            <p className="text-[11px] sm:text-xs text-[#5a7a68] mt-0.5">engineering</p>
-          </div>
+
+        <div className="mt-14 sm:mt-16 w-full max-w-[760px] flex flex-col gap-12 sm:gap-14">
+          <TeamMember
+            photo={TORREN_PHOTO}
+            name="Torren Baker"
+            role="Co-founder"
+            align="left"
+            bio="Capital markets analyst at one of Blackstone's housing companies, modeling margin and risk across a multi-billion-dollar portfolio. Started GroomCart because the supply-cost discipline big institutions take for granted barely exists for the shops doing the actual work."
+          />
+          <TeamMember
+            photo={BOBBY_PHOTO}
+            name="Bobby Groves"
+            role="Co-founder"
+            align="right"
+            bio="Former L.E.K. Consulting strategist on consumer and healthcare projects, including work in pet grooming and pet health. Started GroomCart after watching how much time and margin shops lose to fragmented supply ordering."
+          />
+          <TeamMember
+            photo={ADAM_PHOTO}
+            name="Adam Torregrossa"
+            role="Co-founder"
+            align="left"
+            bio="Former engineer in semiconductor manufacturing, where production lines live or die by parts availability and operational discipline. Started GroomCart because he saw grooming businesses losing time and margin to the same problems manufacturing solved decades ago."
+          />
         </div>
       </div>
     </section>
@@ -360,18 +388,23 @@ function FinalCTATile() {
       className="bg-[#1d1d1f] rounded-[18px] min-h-[280px] sm:min-h-[320px] px-6 sm:px-10 py-14 sm:py-16 flex flex-col items-center text-center"
     >
       <p className="text-[13px] font-medium text-[#a1a1a6] mb-2">Working with our first shops now</p>
-      <h2 className="font-display-tile text-3xl sm:text-4xl md:text-5xl text-[#f5f5f7] leading-[1.04] tracking-tight max-w-[16ch] mx-auto">
-        Twenty minutes with us, in your shop.
+      <h2 className="font-display-tile text-3xl sm:text-4xl md:text-5xl text-[#f5f5f7] leading-[1.04] tracking-tight max-w-[18ch] mx-auto">
+        See it work on your invoices.
       </h2>
-      <p className="text-base sm:text-lg text-[#a1a1a6] mt-4 max-w-[32ch] leading-snug">
-        Bring your invoices. We'll show you what changes.
+      <p className="text-base sm:text-lg text-[#a1a1a6] mt-4 max-w-[36ch] leading-snug">
+        Bring your last few PDFs. We'll show you what changes.
       </p>
 
       {!submitted ? (
         <form
           onSubmit={(e) => {
             e.preventDefault()
-            if (email.includes('@') && email.includes('.')) setSubmitted(true)
+            if (email.includes('@') && email.includes('.')) {
+              const subject = encodeURIComponent('GroomCart demo request')
+              const body = encodeURIComponent(`Hi Adam,\n\nI'd like to see GroomCart on my invoices.\n\nMy email: ${email}\n\nThanks!`)
+              window.location.href = `mailto:adam@groomcart.ai?subject=${subject}&body=${body}`
+              setSubmitted(true)
+            }
           }}
           className="mt-6 flex flex-col sm:flex-row items-center gap-2.5 w-full max-w-md mx-auto"
         >
@@ -382,22 +415,18 @@ function FinalCTATile() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@yourshop.com"
             aria-label="Your email address"
-            className="flex-1 w-full h-11 px-4 rounded-lg bg-white/8 text-white placeholder-white/40 text-sm focus:outline-none focus:bg-white/12 transition-colors"
+            className="flex-1 w-full h-11 px-4 rounded-lg bg-white text-[#1d1d1f] placeholder:text-[#86868b] text-sm focus:outline-none focus:ring-2 focus:ring-white/30 transition-shadow"
           />
           <button
             type="submit"
             className="h-11 px-5 bg-white text-[#1d1d1f] font-medium rounded-lg text-sm whitespace-nowrap hover:bg-white/90 transition-colors w-full sm:w-auto"
           >
-            Book a 20-min call
+            Show me GroomCart
           </button>
         </form>
       ) : (
-        <p className="mt-6 text-[#f5f5f7]">You're on the list. We'll reach out shortly.</p>
+        <p className="mt-6 text-[#f5f5f7]">Mail draft opened. Hit send and we'll be in touch.</p>
       )}
-
-      <div className="flex gap-6 mt-5">
-        <ChevronLink href="mailto:hello@groomcart.com" dark>hello@groomcart.com</ChevronLink>
-      </div>
     </section>
   )
 }
@@ -406,8 +435,8 @@ function Footer() {
   return (
     <footer className="bg-[#f5f5f7] py-5 px-6">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#6e6e73]">
-        <p>GroomCart · Austin, TX · {new Date().getFullYear()}</p>
-        <p>Backed by Y Combinator · About · Privacy</p>
+        <p>GroomCart · Phoenix, AZ · {new Date().getFullYear()}</p>
+        <p>About · Privacy</p>
       </div>
     </footer>
   )
